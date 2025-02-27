@@ -1,2 +1,6 @@
 numpy
-matplotlib[pyplot]
+opencv-python
+matplotlib
+fastapi
+pytest 
+scikit-learn
