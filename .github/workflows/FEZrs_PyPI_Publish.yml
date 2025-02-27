@@ -1,16 +1,14 @@
-name: FEZrs PyPI Publish
+name: PyPI Publish with License Update
 
 on:
   push:
     branches:
-      - main
-    tags:
-      - "v*"
+      - main  # Trigger on push to main (i.e., after PR merge)
 
 jobs:
-  build-and-publish:
+  update-license-and-publish:
     runs-on: ubuntu-latest
-    environment: fezrs
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -19,6 +17,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
+
+      - name: Update setup.py with new license
+        run: |
+          # Use sed (stream editor) to replace the license and classifier in setup.py
+          sed -i 's/license="MIT"/license="Apache 2.0"/g' setup.py
+          sed -i 's/"License :: OSI Approved :: MIT License"/"License :: OSI Approved :: Apache Software License"/g' setup.py
 
       - name: Install dependencies
         run: |
