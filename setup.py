@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="fezrs",
-    version="0.1.0",
+    version="0.1.1",
     packages=find_packages(),
     install_requires=[
         "numpy",
@@ -13,7 +13,7 @@ setup(
         "opencv-python" 
         
     ],
-    author="Mahdi Farmahinifarahani, Hooman Mirzaee, Mahdi Nedaee, Mohammad Hossein Kiani Fayz Abadi",
+    author="Mahdi Farmahinifarahani, Hooman Mirzaee, Mahdi Nedaee, Mohammad Hossein Kiani Fayz Abadi, Yoones Kiani Feyz Abadi, Erfan Karimzadehasl, Parsa Elmi",
     author_email="aradfarahani@aol.com",
     description="Feature Extraction and Zoning for Remote Sensing (FEZrs)",
     long_description=open("README.md").read(),
