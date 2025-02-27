@@ -2,7 +2,7 @@
 
 # **FEZrs**  
 
-**FEZrs** is an advanced Python library developed by **FEZtool** for remote sensing applications. It provides a set of powerful tools for image processing, feature extraction, and analysis of geospatial data.  
+**FEZrs** is an advanced Python library developed by **FEZtool** for remote sensing applications. It provides a set of powerful tools for image processing, feature extraction, and analysis of geospatial data..
 
 ## **Features**  
 ✅ Apply various image filtering techniques (Gaussian, Laplacian, Sobel, Median, Mean)  
