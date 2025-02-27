@@ -1,0 +1,2 @@
+class OException(Exception):
+    pass
