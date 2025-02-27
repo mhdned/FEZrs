@@ -13,7 +13,7 @@ setup(
         "opencv-python" 
         
     ],
-    author="Mahdi Farmahinifarahani","Hooman Mirzaee","Mahdi Nedaee" ,"Mohammad Hossein Kiani Fayz Abadi"
+    author="Mahdi Farmahinifarahani, Hooman Mirzaee, Mahdi Nedaee, Mohammad Hossein Kiani Fayz Abadi",
     author_email="aradfarahani@aol.com",
     description="Feature Extraction and Zoning for Remote Sensing (FEZrs)",
     long_description=open("README.md").read(),
