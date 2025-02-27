@@ -8,6 +8,7 @@ on:
 jobs:
   update-license-and-publish:
     runs-on: ubuntu-latest
+     environment: fezrs
 
     steps:
       - name: Check out code
