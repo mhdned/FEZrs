@@ -21,13 +21,13 @@ jobs:
 
       - name: Update setup.py with new license
         run: |
-          # Use sed (stream editor) to replace the license and classifier in setup.py
+          
           sed -i 's/license="MIT"/license="Apache 2.0"/g' setup.py
           sed -i 's/"License :: OSI Approved :: MIT License"/"License :: OSI Approved :: Apache Software License"/g' setup.py
 
       - name: Automatically bump version in setup.py
         run: |
-          # Get the current version from setup.py
+         
           VERSION=$(python setup.py --version)
           echo "Current version is $VERSION"
 
