@@ -3,12 +3,11 @@ name: PyPI Publish with License Update
 on:
   push:
     branches:
-      - main  # Trigger on push to main (i.e., after PR merge)
+      - main  # Trigger on push to main
 
 jobs:
   update-license-and-publish:
     runs-on: ubuntu-latest
-     environment: fezrs
 
     steps:
       - name: Check out code
@@ -19,33 +18,26 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Update setup.py with new license
-        run: |
-          
-          sed -i 's/license="MIT"/license="Apache 2.0"/g' setup.py
-          sed -i 's/"License :: OSI Approved :: MIT License"/"License :: OSI Approved :: Apache Software License"/g' setup.py
-
       - name: Automatically bump version in setup.py
         run: |
-         
           VERSION=$(python setup.py --version)
           echo "Current version is $VERSION"
 
-          # Increment the version number (for example, bump the minor version)
+          # Increment the minor version (adjust as needed)
           NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF++;print}')
           echo "New version is $NEW_VERSION"
 
-          # Update the version in setup.py
+          # Update version in setup.py
           sed -i "s/version=\"$VERSION\"/version=\"$NEW_VERSION\"/" setup.py
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools wheel twine
+          pip install setuptools wheel twine build
 
       - name: Build package
         run: |
-          python setup.py sdist bdist_wheel
+          python -m build
 
       - name: Publish to PyPI
         env:
