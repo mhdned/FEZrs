@@ -15,7 +15,7 @@
 To install FEZrs and its dependencies, use:  
 
 ```sh
-pip install -r requirements.txt
+pip install fezrs
 ```
 
 ## **Usage**  
