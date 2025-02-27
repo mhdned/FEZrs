@@ -1,8 +1,8 @@
-[![DOI](https://zenodo.org/badge/710286874.svg)](https://doi.org/10.5281/zenodo.14938038)
+[![DOI](https://zenodo.org/badge/710286874.svg)](https://doi.org/10.5281/zenodo.14938038)  
 
-# **FEZrs**
+# **FEZrs**  
 
-**FEZrs** is an advanced Python library developed by [**FEZtool**](https://feztool.com/) for remote sensing applications. It provides a set of powerful tools for image processing, feature extraction, and analysis of geospatial data.
+**FEZrs** is an advanced Python library developed by [**FEZtool**](https://feztool.com/) for remote sensing applications. It provides a set of powerful tools for image processing, feature extraction, and analysis of geospatial data.  
 
 ## **Features**  
 ✅ Apply various image filtering techniques (Gaussian, Laplacian, Sobel, Median, Mean)  
@@ -54,6 +54,9 @@ We welcome contributions! To contribute:
 3. Commit your changes (`git commit -m "Add new feature"`)  
 4. Push to your branch (`git push origin feature-name`)  
 5. Open a Pull Request  
+
+## **Acknowledgment**  
+Special thanks to [**Chakad Cafe**](https://www.chakadcoffee.com/) for the coffee that kept us fueled during development! ☕  
 
 ## **License**  
 This project is licensed under the **Apache-2.0 license**.  
