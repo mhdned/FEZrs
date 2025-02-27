@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="fezrs",
-    version="0.2.4",
+    version="0.2.6",
     packages=find_packages(),
     install_requires=[
         "numpy",
