@@ -10,10 +10,7 @@ setup(
         "scikit-image",
         "scikit-learn",
         "fastapi",
-        "scikit-image",
         "opencv-python"
-
-        
     ],
     author="Mahdi Farmahinifarahani, Hooman Mirzaee, Mahdi Nedaee, Mohammad Hossein Kiani Fayz Abadi, Yoones Kiani Feyz Abadi, Erfan Karimzadehasl, Parsa Elmi",
     author_email="aradfarahani@aol.com",
