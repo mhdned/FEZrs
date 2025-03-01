@@ -33,6 +33,6 @@ test:
 
 about:
   home: https://github.com/your-username/fezrs  # Change to your repo URL
-  license: Apache 2.0  # Specify the license
+  license: MIT  # Specify the license
   license_file: LICENSE  # If you have a LICENSE file
   summary: "Your package description here."
