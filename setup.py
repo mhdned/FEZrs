@@ -1,9 +1,12 @@
 from setuptools import setup
-import setuptools_scm
+
+def read_version():
+    with open("VERSION", "r") as f:
+        return f.read().strip()
 
 setup(
     name="fezrs",
-    use_scm_version=True, 
+    version=read_version(),
     setup_requires=["setuptools", "setuptools_scm"],
     packages=["fezrs"],
     install_requires=[
@@ -13,7 +16,6 @@ setup(
         "scikit-learn",
         "fastapi",
         "opencv",
-        
     ],
     author="Mahdi Farmahinifarahani, Hooman Mirzaee, Mahdi Nedaee, Mohammad Hossein Kiani Fayz Abadi, Yoones Kiani Feyz Abadi, Erfan Karimzadehasl, Parsa Elmi",
     author_email="aradfarahani@aol.com",
