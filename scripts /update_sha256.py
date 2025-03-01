@@ -59,10 +59,10 @@ def main():
     # Update the meta.yaml file with the new version and SHA256
     update_meta_yaml(meta_yaml_path, new_sha256, version)
     
-    # Set the version as an environment variable
+    # Set the version as an environment variable for conda build
     os.environ["VERSION"] = version
 
-    # Optionally, trigger the build
+    # Trigger the Conda build
     os.system("conda build recipe/")
 
 if __name__ == "__main__":
