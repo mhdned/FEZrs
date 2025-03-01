@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Needed for setuptools_scm to detect tags
+          fetch-depth: 0  # Required for setuptools_scm to detect version
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -27,7 +27,7 @@ jobs:
 
       - name: Determine version
         run: |
-          VERSION=$(python setup.py --version)
+          VERSION=$(python setup.py --version)  # Now setuptools_scm is installed
           echo "Current version: $VERSION"
           echo "PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
 
@@ -37,11 +37,17 @@ jobs:
           NEW_VERSION=$(echo $OLD_VERSION | awk -F. -v OFS=. '{$NF++;print}')
           echo "New version: $NEW_VERSION"
 
-          # Create new tag and push it
+          # Update the VERSION file
+          echo "$NEW_VERSION" > VERSION
+          
+          # Commit & push the new version
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+          git add VERSION
+          git commit -m "Bump version to $NEW_VERSION"
           git tag $NEW_VERSION
           git push origin $NEW_VERSION
+          git push
 
       - name: Build PyPI package
         run: python -m build
