@@ -1,10 +1,10 @@
 package:
   name: fezrs
-  version: "{{ version }}"  # This will be replaced by the script with the actual version from VERSION file
+  version: "{{ version }}"  # Jinja template placeholder
 
 source:
   url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
-  sha256: {{ sha256_placeholder }}  # This will be updated by your script
+  sha256: "{{ sha256_placeholder }}"  # This will be updated by your script
 
 build:
   number: 1
