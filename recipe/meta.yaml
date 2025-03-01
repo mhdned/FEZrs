@@ -1,8 +1,6 @@
-{% set version = fetch_version() %}
-
 package:
   name: fezrs
-  version: {{ version }}
+  version: {{ environ.get('CONDA_PACKAGE_VERSION', '0.0.0') }}  # Dynamically fetch version
 
 source:
   url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
