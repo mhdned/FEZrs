@@ -3,7 +3,7 @@ package:
   version: 0.2.12
 
 source:
-  git_url: https://github.com/aradfarahani/FEZrs.git
+  git_url: https://github.com/FEZtool-team/FEZrs.git
   git_rev: v0.2.12
 
 build:
@@ -28,7 +28,7 @@ test:
     - fezrs
 
 about:
-  home: https://github.com/aradfarahani/FEZrs
+  home: https://github.com/FEZtool-team/FEZrs
   license: Apache 2.0
   license_file: LICENSE
   summary: "FEZrs: Cutting-edge Remote Sensing Image Processing Library"
