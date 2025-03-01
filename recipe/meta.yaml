@@ -1,12 +1,10 @@
-{% set version = environ.get('FEZRS_VERSION', '0.4.10') %}
-
 package:
   name: fezrs
-  version: {{ version }}
+  version: "{{ version }}"  # This will be replaced by the script with the actual version from VERSION file
 
 source:
   url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
-  sha256: 5e6881632966fbf10d97d0077952c031784b25353807a404421b412029625d78  # Update with the correct checksum
+  sha256: {{ sha256_placeholder }}  # This will be updated by your script
 
 build:
   number: 1
@@ -26,3 +24,15 @@ requirements:
     - scikit-learn
     - fastapi
     - opencv
+
+test:
+  imports:
+    - fezrs  # Replace this with actual module names you're testing
+  commands:
+    - pytest  # Or any other test commands you want to run
+
+about:
+  home: https://github.com/your-username/fezrs  # Change to your repo URL
+  license: Apache 2.0  # Specify the license
+  license_file: LICENSE  # If you have a LICENSE file
+  summary: "Your package description here."
