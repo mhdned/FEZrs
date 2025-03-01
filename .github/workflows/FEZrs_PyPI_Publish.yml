@@ -3,7 +3,7 @@ name: Conda and PyPI Publish with License Update
 on:
   push:
     branches:
-      - main  # Trigger on push to main
+      - main  # Trigger on push to the main branch
 
 jobs:
   update-license-and-publish:
@@ -46,12 +46,27 @@ jobs:
         run: |
           python -m twine upload dist/*
 
+      - name: Set up Conda for packaging
+        run: |
+          conda config --add channels conda-forge
+          conda install -c conda-forge conda-build anaconda-client
+
       - name: Build Conda package
         run: |
           conda build .
-        
+
       - name: Upload Conda package to Anaconda
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
         run: |
-          anaconda upload ~/miniconda3/conda-bld/linux-64/*fezrs*.tar.bz2 --token $ANACONDA_API_KEY
+          # Find the Conda package in the build directory
+          PACKAGE_PATH=$(find ~/miniconda3/conda-bld/linux-64 -name '*fezrs*.tar.bz2' | head -n 1)
+
+          # Ensure that a package is found
+          if [ -z "$PACKAGE_PATH" ]; then
+            echo "No Conda package found to upload!"
+            exit 1
+          fi
+
+          # Upload to Anaconda
+          anaconda upload $PACKAGE_PATH --token $ANACONDA_API_KEY
