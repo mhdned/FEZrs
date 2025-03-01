@@ -1,13 +1,22 @@
-cff-version: 1.0.1
+cff-version: 0.2.12
 message: "If you use this software, please cite it as below."
 authors:
-  - family-names: Kiani Fayz Abadi
-    given-names: Mohammad Hossein
-  - family-names: Nedaee
-    given-names: Mahdi
   - family-names: Farmahinifarahani
     given-names: Mahdi
-title: "FEZtool-team/FEZClient: Version 1.0.1"
-version: 1.0.1
-date-released: 2025-02-25
+  - family-names: Mirzaee
+    given-names: Hooman
+  - family-names: Nedaee
+    given-names: Mahdi
+  - family-names: Kiani Fayz Abadi
+    given-names: Mohammad Hossein
+  - family-names: Kiani Fayz Abadi
+    given-names: Yoones
+  - family-names: Karimzadehasl
+    given-names: Erfan
+  - family-names: Elmi 
+    given-names: Parsa
+
+  title: "FEZrs: Version 0.2.12"
+version: 0.2.12
+date-released: 2025-03-01
 
