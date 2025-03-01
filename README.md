@@ -1,4 +1,4 @@
-# **FEZrs v0.4.16**  
+# **FEZrs**  
 
 [![DOI](https://zenodo.org/badge/710286874.svg)](https://doi.org/10.5281/zenodo.14938038)  ![PyPI](https://img.shields.io/pypi/v/FEZrs?color=blue&label=PyPI&logo=pypi) [![Conda](https://img.shields.io/conda/vn/conda-forge/fezrs)](https://anaconda.org/conda-forge/fezrs)
  ![License](https://img.shields.io/pypi/l/FEZrs)  ![PyPI - Downloads](https://img.shields.io/pypi/dm/FEZrs)	 ![GitHub stars](https://img.shields.io/github/stars/FEZtool-team/FEZrs?style=social) 
