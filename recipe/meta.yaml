@@ -1,0 +1,50 @@
+{% set name = "fezrs" %}
+{% set version = "0.3.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  # Download the source package from PyPI
+  url: https://pypi.io/packages/source/f/{{ name[0] }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 5114c07ab6dd3c7c9a2050a4a07d971be52ea5d18db4ab484283a7f48f62b03c
+
+build:
+  number: 1
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir"
+
+requirements:
+  host:
+    - python >=3.8
+    - pip
+    - setuptools
+  run:
+    - python >=3.8
+    - numpy
+    - matplotlib
+    - scikit-image
+    - scikit-learn
+    - fastapi
+    - opencv-python
+
+test:
+  commands:
+    - python -c "import fezrs"
+  files:
+    - README.md
+
+about:
+  home: https://github.com/FEZtool-team/FEZrs
+  license: Apache-2.0
+  license_file: LICENSE
+  summary: "Feature Extraction and Zoning for Remote Sensing (FEZrs)"
+  description: |
+    FEZrs is a Python package for remote sensing image processing and analysis.
+    It provides tools for feature extraction, zoning, and other remote sensing applications.
+  dev_url: https://github.com/FEZtool-team/FEZrs
+
+extra:
+  recipe-maintainers:
+    - aradfarahani
