@@ -1,6 +1,6 @@
 package:
   name: fezrs
-  version: "{{ version }}"  # This should resolve during the build process
+  version: "{{ version }}"  # Placeholder for version to be replaced dynamically
 
 source:
   url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
@@ -32,7 +32,7 @@ test:
     - pytest  # Or any other test commands you want to run
 
 about:
-  home: https://github.com/FEZtool-team/fezrs  # Change to your repo URL
-  license: Apache 2.0  # Specify the license
+  home: https://github.com/your-username/fezrs  # Change to your repo URL
+  license: MIT  # Specify the license
   license_file: LICENSE  # If you have a LICENSE file
   summary: "Your package description here."
