@@ -46,12 +46,16 @@ jobs:
         run: |
           # Initialize Conda
           source $HOME/miniconda3/bin/activate
+          conda init bash
 
           # Add conda-forge channel
           conda config --add channels conda-forge
 
           # Install conda-build
           conda install conda-build
+
+          # Verify conda-build is installed
+          conda list conda-build
 
       - name: Build PyPI package
         run: |
@@ -66,7 +70,10 @@ jobs:
 
       - name: Build Conda package
         run: |
-          # Now that conda-build is installed, build the package
+          # Ensure Conda is properly initialized
+          source $HOME/miniconda3/bin/activate
+
+          # Build Conda package
           conda build .
 
       - name: Upload Conda package to Anaconda
