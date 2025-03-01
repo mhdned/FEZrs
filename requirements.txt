@@ -4,3 +4,4 @@ matplotlib
 fastapi
 pytest 
 scikit-learn
+scikit-image
