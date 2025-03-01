@@ -42,13 +42,13 @@ jobs:
           git tag $NEW_VERSION  # Create a new tag with the new version
 
       - name: Commit & Push the New Version
-      env:
-      GH_PAT: ${{ secrets.GH_PAT }}  # The Personal Access Token
-      run: |
-      git config --global user.name "github-actions[bot]"
-      git config --global user.email "github-actions@users.noreply.github.com"
-      git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
-      git push origin main --tags
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}  # The Personal Access Token
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
+          git push origin main --tags
     
       - name: Build and Publish to PyPI
         env:
