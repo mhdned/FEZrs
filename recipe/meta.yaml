@@ -11,17 +11,14 @@ build:
   script: python setup.py install
 
 requirements:
-  host:
-    - python >=3.8
+  build:
+    - python 3.8
     - setuptools
+    - pip
+
   run:
-    - python >=3.8
-    - numpy
-    - matplotlib
-    - scikit-image
-    - scikit-learn
-    - fastapi
-    - opencv-python
+    - python 3.8
+
 
 test:
   imports:
