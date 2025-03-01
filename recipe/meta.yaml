@@ -1,4 +1,4 @@
-{% set version = environ.get('FEZRS_VERSION') %}
+{% set version = environ.get('FEZRS_VERSION', '0.4.10') %}
 
 package:
   name: fezrs
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
-  sha256: 5114c07ab6dd3c7c9a2050a4a07d971be52ea5d18db4ab484283a7f48f62b03c
+  sha256: 5e6881632966fbf10d97d0077952c031784b25353807a404421b412029625d78  # Update with the correct checksum
 
 build:
   number: 1
