@@ -24,9 +24,17 @@ jobs:
           conda install -y conda-build anaconda-client
 
       - name: Build Conda package
-        run: |
-          export PATH="$HOME/miniconda3/bin:$PATH"
-          conda build recipe/
+  run: |
+    export PATH="$HOME/miniconda3/bin:$PATH"
+    
+    # Ensure the VERSION file exists before building
+    if [ ! -f VERSION ]; then
+      echo "Error: VERSION file is missing!"
+      exit 1
+    fi
+    
+    cat VERSION  # Debugging: Print the VERSION file
+    conda build recipe/
 
       - name: Upload Conda package to Anaconda
         env:
