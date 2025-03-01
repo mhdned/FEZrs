@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="fezrs",
-    version="0.2.10",
+    version="0.2.11",
     packages=find_packages(),
     install_requires=[
         "numpy",
@@ -10,7 +10,9 @@ setup(
         "scikit-image",
         "scikit-learn",
         "fastapi",
-        "opencv-python" 
+        "scikit-image",
+        "opencv-python"
+
         
     ],
     author="Mahdi Farmahinifarahani, Hooman Mirzaee, Mahdi Nedaee, Mohammad Hossein Kiani Fayz Abadi, Yoones Kiani Feyz Abadi, Erfan Karimzadehasl, Parsa Elmi",
