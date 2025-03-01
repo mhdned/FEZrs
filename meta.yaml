@@ -1,0 +1,42 @@
+package:
+  name: fezrs
+  version: 0.2.12
+
+source:
+  git_url: https://github.com/aradfarahani/FEZrs.git
+  git_rev: v0.2.12
+
+build:
+  number: 1
+  script: python setup.py install
+
+requirements:
+  host:
+    - python >=3.8
+    - setuptools
+  run:
+    - python >=3.8
+    - numpy
+    - matplotlib
+    - scikit-image
+    - scikit-learn
+    - fastapi
+    - opencv-python
+
+test:
+  imports:
+    - fezrs
+
+about:
+  home: https://github.com/aradfarahani/FEZrs
+  license: Apache 2.0
+  license_file: LICENSE
+  summary: "FEZrs: Cutting-edge Remote Sensing Image Processing Library"
+  description: |
+    FEZrs is a library designed for processing remote sensing imagery, including tools for feature extraction and zoning.
+  doc_url: https://github.com/aradfarahani/FEZrs/wiki
+  dev_url: https://github.com/aradfarahani/FEZrs
+
+extra:
+  recipe-maintainers:
+    - aradfarahani
