@@ -1,8 +1,9 @@
-{% set version = environ.get('FEZRS_VERSION') %}
+{% set version = environ.get('FEZRS_VERSION', '0.1.0') %}  # Default version as fallback
 
 package:
   name: fezrs
   version: {{ version }}
+
 
 source:
   # If you're fetching from PyPI, you can still use the tarball URL.
