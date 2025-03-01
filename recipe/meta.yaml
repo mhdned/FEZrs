@@ -1,4 +1,4 @@
-{% set version = fetch_version() %}
+{% set version = load_file_data("VERSION").strip() %}
 
 package:
   name: fezrs
