@@ -36,32 +36,23 @@ jobs:
           NEW_VERSION=$(echo $OLD_VERSION | awk -F. -v OFS=. '{$NF++;print}')
           echo "New version: $NEW_VERSION"
           
-          echo $NEW_VERSION > VERSION
+          echo $NEW_VERSION > VERSION  # Write the new version to VERSION file
           git add VERSION
           git commit -m "Bump version to $NEW_VERSION"
-          git tag $NEW_VERSION
+          git tag $NEW_VERSION  # Create a new tag with the new version
 
       - name: Commit & Push the New Version
-  env:
-    GH_PAT: ${{ secrets.GH_PAT }}  # The Personal Access Token
-  run: |
-    git config --global user.name "github-actions[bot]"
-    git config --global user.email "github-actions@users.noreply.github.com"
-
-    git add VERSION
-    git commit -m "Bump version to $NEW_VERSION"
-    git tag $NEW_VERSION
-
-    # Use token to push changes
-    git remote set-url origin https://x-access-token:$GH_PAT@github.com/${{ github.repository }}.git
-    git push origin main --tags
-    git push
-
-
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}  # The Personal Access Token
+        run: |
+          # Use token to authenticate and push the version bump
+          git remote set-url origin https://x-access-token:$GH_PAT@github.com/${{ github.repository }}.git
+          git push origin main --tags  # Push commits and tags
+          
       - name: Build and Publish to PyPI
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
           python -m build
-          python -m twine upload dist/*
+          python -m twine upload dist/*  # Upload the built package to PyPI
