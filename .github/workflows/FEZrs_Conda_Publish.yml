@@ -1,0 +1,41 @@
+name: Conda Publish
+
+on:
+  workflow_run:
+    workflows: ["PyPI Publish"]
+    types:
+      - completed
+
+jobs:
+  conda_publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Miniconda and set up Conda
+        run: |
+          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+          bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda3
+          export PATH="$HOME/miniconda3/bin:$PATH"
+          conda config --add channels conda-forge
+          conda install -y conda-build anaconda-client
+
+      - name: Build Conda package
+        run: |
+          export PATH="$HOME/miniconda3/bin:$PATH"
+          conda build recipe/
+
+      - name: Upload Conda package to Anaconda
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
+        run: |
+          export PATH="$HOME/miniconda3/bin:$PATH"
+          PACKAGE_PATH=$(find $HOME/miniconda3/conda-bld/linux-64 -name '*fezrs*.tar.bz2' | head -n 1)
+          if [ -z "$PACKAGE_PATH" ]; then
+            echo "No Conda package found to upload!"
+            exit 1
+          fi
+          anaconda upload $PACKAGE_PATH --token $ANACONDA_API_KEY
