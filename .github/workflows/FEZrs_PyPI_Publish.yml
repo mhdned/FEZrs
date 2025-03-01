@@ -1,4 +1,4 @@
-name: PyPI Publish with License Update
+name: Conda and PyPI Publish with License Update
 
 on:
   push:
@@ -33,9 +33,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools wheel twine build
+          pip install setuptools wheel twine build conda conda-build anaconda-client
 
-      - name: Build package
+      - name: Build PyPI package
         run: |
           python -m build
 
@@ -45,3 +45,13 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
           python -m twine upload dist/*
+
+      - name: Build Conda package
+        run: |
+          conda build .
+        
+      - name: Upload Conda package to Anaconda
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
+        run: |
+          anaconda upload ~/miniconda3/conda-bld/linux-64/*fezrs*.tar.bz2 --token $ANACONDA_API_KEY
