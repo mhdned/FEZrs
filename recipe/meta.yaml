@@ -27,7 +27,7 @@ requirements:
     - scikit-image
     - scikit-learn
     - fastapi
-    - opencv-python
+    - opencv
 
 test:
   commands:
