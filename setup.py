@@ -1,16 +1,18 @@
-from setuptools import setup, find_packages
+from setuptools import setup
+import setuptools_scm
 
 setup(
     name="fezrs",
-    version="0.2.2",
-    packages=find_packages(),
+    use_scm_version=True, 
+    setup_requires=["setuptools", "setuptools_scm"],
+    packages=["fezrs"],
     install_requires=[
         "numpy",
         "matplotlib",
         "scikit-image",
         "scikit-learn",
         "fastapi",
-        "opencv-python" 
+        "opencv",
         
     ],
     author="Mahdi Farmahinifarahani, Hooman Mirzaee, Mahdi Nedaee, Mohammad Hossein Kiani Fayz Abadi, Yoones Kiani Feyz Abadi, Erfan Karimzadehasl, Parsa Elmi",
