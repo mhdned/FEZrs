@@ -1,6 +1,6 @@
-[![DOI](https://zenodo.org/badge/710286874.svg)](https://doi.org/10.5281/zenodo.14938038)  
-
 # **FEZrs v0.2.12**  
+
+[![DOI](https://zenodo.org/badge/710286874.svg)](https://doi.org/10.5281/zenodo.14938038)  ![PyPI](https://img.shields.io/pypi/v/FEZrs?color=blue&label=PyPI&logo=pypi) ![License](https://img.shields.io/pypi/l/FEZrs)  ![PyPI - Downloads](https://img.shields.io/pypi/dm/FEZrs)	 ![GitHub stars](https://img.shields.io/github/stars/FEZtool-team/FEZrs?style=social) 
 
 **FEZrs** is an advanced Python library developed by [**FEZtool**](https://feztool.com/) for remote sensing applications. It provides a set of powerful tools for image processing, feature extraction, and analysis of geospatial data. 
 
