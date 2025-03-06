@@ -1,10 +1,13 @@
+{% set version = "1.0.0" %}
+{% set sha256 = "your_sha256_hash_here" %} 
+
 package:
   name: fezrs
-  version: "{{ version }}"  # Placeholder for version to be replaced dynamically
+  version: "{{ version }}"
 
 source:
-  url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
-  sha256: "{{ sha256_placeholder }}"  # This will be updated by your script
+  url: "https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz"
+  sha256: "{{ sha256 }}"
 
 build:
   number: 1
@@ -27,12 +30,16 @@ requirements:
 
 test:
   imports:
-    - fezrs  # Replace this with actual module names you're testing
+    - fezrs
   commands:
-    - pytest  # Or any other test commands you want to run
+    - pytest
 
 about:
-  home: https://github.com/your-username/fezrs  # Change to your repo URL
-  license: MIT  # Specify the license
-  license_file: LICENSE  # If you have a LICENSE file
-  summary: "Your package description here."
+  home: "https://github.com/your-username/fezrs"
+  license: "MIT"
+  license_file: "LICENSE"
+  summary: "A remote sensing tool for image processing and analysis."
+
+extra:
+  recipe-maintainers:
+    - your-github-username
