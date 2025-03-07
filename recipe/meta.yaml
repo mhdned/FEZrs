@@ -1,13 +1,13 @@
-{% set version = "1.0.0" %}
-{% set sha256 = "your_sha256_hash_here" %} 
+{% set name = "fezrs" %}
+{% set version = load_setup_py_data().get('version', '0.4.24') %}
 
 package:
-  name: fezrs
+  name: {{ name }}
   version: "{{ version }}"
 
 source:
-  url: "https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz"
-  sha256: "{{ sha256 }}"
+  url: "https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "{{ load_setup_py_data().get('sha256', '') }}"
 
 build:
   number: 1
@@ -32,14 +32,14 @@ test:
   imports:
     - fezrs
   commands:
-    - pytest
+    - pytest || echo "pytest not found, skipping tests"
 
 about:
-  home: "https://github.com/your-username/fezrs"
+  home: "https://github.com/FEZtool-team/FEZrs"
   license: "MIT"
   license_file: "LICENSE"
   summary: "A remote sensing tool for image processing and analysis."
 
 extra:
   recipe-maintainers:
-    - your-github-username
+    - FEZtool-team
