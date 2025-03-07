@@ -39,7 +39,6 @@ jobs:
           export PATH="$HOME/miniconda3/bin:$PATH"
           conda build recipe/
         env:
-          FEZRS_VERSION: ${{ secrets.FEZRS_VERSION }}
           SHA256_HASH: ${{ env.SHA256_HASH }}
 
       - name: Upload Conda package to Anaconda
