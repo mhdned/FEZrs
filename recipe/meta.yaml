@@ -1,5 +1,4 @@
 {% set version = environ.get('FEZRS_VERSION', '0.0.0') %}
-{% set sha256 = environ.get('SHA256_HASH', '') %}
 
 
 package:
@@ -8,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
-  sha256: "{{ sha256 }}"
+  sha256: "{{ env.SHA256_HASH }}"
 
 build:
   number: 1
