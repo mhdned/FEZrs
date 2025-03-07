@@ -1,5 +1,5 @@
 {% set name = "fezrs" %}
-{% set version = load_setup_py_data().get('version', '0.4.24') %}
+{% set version = "{{ env.FEZRS_VERSION }}" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: "https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version }}.tar.gz"
-  sha256: "{{ load_setup_py_data().get('sha256', '') }}"
+  sha256: "{{ env.SHA256_HASH }}"
 
 build:
   number: 1
