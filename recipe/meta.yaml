@@ -1,4 +1,4 @@
-{% set version = env.get('FEZRS_VERSION', '0.0.0') %}
+{% set version = lookup('env', 'FEZRS_VERSION') %}
 {% set sha256 = lookup('pipe', 'sha256sum fezrs-{{ version }}.tar.gz | cut -d " " -f1') %}
 
 package:
