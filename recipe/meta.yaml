@@ -1,14 +1,10 @@
-{% set name = "fezrs" %}
-{% set version = "__VERSION__" %}
-{% set sha256 = "__SHA256__" %}
-
 package:
-  name: {{ name }}
-  version: "{{ version }}"
+  name: fezrs
+  version: "{{ version }}" # Placeholder for version to be replaced dynamically
 
 source:
-  url: "https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version }}.tar.gz"
-  sha256: "{{ sha256 }}"
+  url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
+  sha256: "{{ sha256_placeholder }}" # This will be updated by your script
 
 build:
   number: 1
@@ -31,16 +27,12 @@ requirements:
 
 test:
   imports:
-    - fezrs
+    - fezrs # Replace this with actual module names you're testing
   commands:
-    - pytest || echo "pytest not found, skipping tests"
+    - pytest # Or any other test commands you want to run
 
 about:
-  home: "https://github.com/FEZtool-team/FEZrs"
-  license: "MIT"
-  license_file: "LICENSE"
-  summary: "A remote sensing tool for image processing and analysis."
-
-extra:
-  recipe-maintainers:
-    - FEZtool-team
+  home: https://github.com/your-username/fezrs # Change to your repo URL
+  license: MIT # Specify the license
+  license_file: LICENSE # If you have a LICENSE file
+  summary: "Your package description here."
