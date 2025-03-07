@@ -1,0 +1,60 @@
+name: Conda Publish
+
+on:
+  workflow_run:
+    workflows: ["PyPI Publish"]
+    types:
+      - completed
+
+jobs:
+  conda_publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set FEZRS_VERSION
+        run: |
+          LATEST_VERSION=$(curl -s https://pypi.org/pypi/fezrs/json | jq -r '.info.version')
+          echo "FEZRS_VERSION=$LATEST_VERSION" >> $GITHUB_ENV
+
+      - name: Set up Miniconda
+        run: |
+          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+          bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda3
+          export PATH="$HOME/miniconda3/bin:$PATH"
+          conda config --add channels conda-forge
+          conda install -y conda-build anaconda-client
+
+      - name: Download package source and calculate sha256
+        run: |
+          PACKAGE_URL=$(curl -s https://pypi.org/pypi/fezrs/${{ env.FEZRS_VERSION }}/json | jq -r '.urls[] | select(.packagetype == "sdist") | .url')
+          wget $PACKAGE_URL -P $HOME/
+
+          SHA256_HASH=$(sha256sum $HOME/fezrs-${{ env.FEZRS_VERSION }}.tar.gz | awk '{ print $1 }')
+          echo "SHA256_HASH=$SHA256_HASH" >> $GITHUB_ENV
+
+          sed -i "s|version:.*|version: \"${{ env.FEZRS_VERSION }}\"|" recipe/meta.yaml
+          sed -i "s|sha256:.*|sha256: $SHA256_HASH|" recipe/meta.yaml
+
+      - name: Verify meta.yaml content
+        run: cat recipe/meta.yaml
+
+      - name: Build Conda package
+        run: |
+          export PATH="$HOME/miniconda3/bin:$PATH"
+          conda build recipe/
+
+      - name: Upload Conda package to Anaconda
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
+        run: |
+          export PATH="$HOME/miniconda3/bin:$PATH"
+          PACKAGE_PATH=$(find $HOME/miniconda3/conda-bld/linux-64 -name '*fezrs*.tar.bz2' | head -n 1)
+          if [ -z "$PACKAGE_PATH" ]; then
+            echo "No Conda package found to upload!"
+            exit 1
+          fi
+          anaconda upload $PACKAGE_PATH --token $ANACONDA_API_KEY

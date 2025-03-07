@@ -1,0 +1,7 @@
+numpy
+opencv-python
+matplotlib
+fastapi
+pytest 
+scikit-learn
+scikit-image
