@@ -1,5 +1,6 @@
-{{% set version = environ.get('FEZRS_VERSION', '0.0.0') %}}
-{{% set sha256 = environ.get('SHA256_HASH', '') %}}
+{% set version = environ.get('FEZRS_VERSION', '0.0.0') %}
+{% set sha256 = environ.get('SHA256_HASH', '') %}
+
 
 package:
   name: fezrs
