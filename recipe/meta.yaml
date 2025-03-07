@@ -29,12 +29,12 @@ requirements:
 
 test:
   imports:
-    - fezrs # Replace this with actual module names you're testing
+    - fezrs
   commands:
-    - pytest # Or any other test commands you want to run
+    - pytest
 
 about:
-  home: https://github.com/your-username/fezrs # Change to your repo URL
-  license: MIT # Specify the license
-  license_file: LICENSE # If you have a LICENSE file
+  home: https://github.com/FEZtool-team/fezrs
+  license: MIT
+  license_file: LICENSE
   summary: "Your package description here."
