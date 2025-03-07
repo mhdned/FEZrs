@@ -29,10 +29,18 @@ jobs:
           conda config --add channels conda-forge
           conda install -y conda-build anaconda-client
 
+      - name: Calculate SHA256 for the tarball
+        run: |
+          SHA256=$(sha256sum fezrs-${FEZRS_VERSION}.tar.gz | awk '{ print $1 }')
+          echo "SHA256_HASH=$SHA256" >> $GITHUB_ENV
+
       - name: Build Conda package
         run: |
           export PATH="$HOME/miniconda3/bin:$PATH"
           conda build recipe/
+        env:
+          FEZRS_VERSION: ${{ secrets.FEZRS_VERSION }}
+          SHA256_HASH: ${{ env.SHA256_HASH }}
 
       - name: Upload Conda package to Anaconda
         env:
