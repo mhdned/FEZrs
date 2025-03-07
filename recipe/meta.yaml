@@ -1,10 +1,12 @@
+"{% set version = env.FEZRS_VERSION %}"
+
 package:
   name: fezrs
-  version: "{{ version }}" # Placeholder for version to be replaced dynamically
+  version: "{{ version }}"
 
 source:
   url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
-  sha256: "{{ sha256_placeholder }}" # This will be updated by your script
+  sha256: "{{ sha256_placeholder }}"
 
 build:
   number: 1
