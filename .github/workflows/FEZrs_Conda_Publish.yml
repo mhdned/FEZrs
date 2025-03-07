@@ -29,6 +29,11 @@ jobs:
           conda config --add channels conda-forge
           conda install -y conda-build anaconda-client
 
+      - name: Download Source Tarball
+        run: |
+          wget https://pypi.io/packages/source/f/fezrs/fezrs-${FEZRS_VERSION}.tar.gz -O fezrs.tar.gz
+          ls -lah
+
       - name: Calculate SHA256 for the tarball
         run: |
           SHA256=$(sha256sum fezrs-${FEZRS_VERSION}.tar.gz | awk '{ print $1 }')
