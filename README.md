@@ -61,4 +61,4 @@ We welcome contributions! To contribute:
 Special thanks to [**Chakad Cafe**](https://www.chakadcoffee.com/) for the coffee that kept us fueled during development! ☕  
 
 ## **License**  
-This project is licensed under the **Apache-2.0 license**.
+This project is licensed under the **Apache-2.0 license**. 
