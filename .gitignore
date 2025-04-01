@@ -1,0 +1,11 @@
+# Default directories
+.qodo
+
+# Develop directories
+/data
+/commands
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
