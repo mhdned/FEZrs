@@ -1,14 +1,28 @@
-from pathlib import Path
+# Import module and files
+from fezrs.utils.file_handler import FileHandler
 
-from .file_handler import OpenFiles
+class BaseTool:
+    """
+    A base class for FEZrs tools that process different spectral bands.
 
+    This class provides a foundation for implementing various spectral analysis tools.
+    It handles the initialization of file paths using the FileHandler and enforces the 
+    implementation of core methods in subclasses.
 
-class Base:
-    def __init__(self, files: OpenFiles):
-        self.files = files
+    Attributes:
+        files_handler (FileHandler): An instance of FileHandler that manages the spectral band files.
+    """
+    def __init__(self, **band_file_path):
+        """
+            ## constructor method
+        """
+        self.files_handler = FileHandler(**band_file_path)
 
-    def calculate(self, extra_params: dict):
-        pass
+    def validate(self):
+        raise NotImplementedError("Subclasses should implement this method")
 
-    def export(self, file_path: Path, title: str):
-        pass
+    def calculate(self):
+        raise NotImplementedError("Subclasses should implement this method")
+
+    def export(self, file_path):
+        raise NotImplementedError("Subclasses should implement this method")
