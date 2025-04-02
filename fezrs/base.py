@@ -4,6 +4,7 @@ from typing import Union
 
 # Import module and files
 from fezrs.utils.file_handler import FileHandler
+from fezrs.utils.type_handler import PathLike
 
 class BaseTool:
     """
@@ -35,5 +36,17 @@ class BaseTool:
     def calculate(self):
         raise NotImplementedError("Subclasses should implement this method")
 
-    def export_file(self, file_path):
+    def export_file(self, file_path: PathLike):
         raise NotImplementedError("Subclasses should implement this method")
+    def run(self, output_path: PathLike, **export_kwargs):
+        """
+        ## run (Method)
+        Runs the full pipeline: validation, calculation, and exporting the image.
+
+        ### Args:
+            output_path (str or Path): Directory where the file will be saved.
+            **export_kwargs: Additional arguments to customize the export (e.g., figsize, colormap).
+        """
+        self.validate()
+        self.calculate()
+        self.export_file(output_path, **export_kwargs)
