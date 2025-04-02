@@ -8,6 +8,10 @@
 # Develop files
 *_output_*.png
 
+# Test files
+/tests/output
+/tests/sample-data
+
 # Python
 __pycache__/
 *.pyc
