@@ -36,7 +36,7 @@ class BaseTool:
     def calculate(self):
         raise NotImplementedError("Subclasses should implement this method")
 
-    def export_file(self, file_path: PathLike):
+    def export_file(self, output_path: PathLike):
         raise NotImplementedError("Subclasses should implement this method")
     def run(self, output_path: PathLike, **export_kwargs):
         """
