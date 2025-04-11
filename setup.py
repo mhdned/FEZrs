@@ -1,8 +1,10 @@
 from setuptools import setup
 
+
 def read_version():
     with open("VERSION", "r") as f:
         return f.read().strip()
+
 
 setup(
     name="fezrs",
@@ -12,10 +14,9 @@ setup(
     install_requires=[
         "numpy",
         "matplotlib",
-        "scikit-image",
         "scikit-learn",
-        "fastapi",
-        "opencv",
+        "scikit-image",
+        "opencv-python",
     ],
     author="Mahdi Farmahinifarahani, Hooman Mirzaee, Mahdi Nedaee, Mohammad Hossein Kiani Fayz Abadi, Yoones Kiani Feyz Abadi, Erfan Karimzadehasl, Parsa Elmi",
     author_email="aradfarahani@aol.com",
@@ -28,5 +29,5 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.10",
 )
