@@ -1,4 +1,5 @@
 numpy
-scikit-image
 matplotlib
+scikit-learn
+scikit-image
 opencv-python
