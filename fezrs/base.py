@@ -1,52 +1,109 @@
-# Import package and libraries
+# Import packages and libraries
+from abc import ABC
 from pathlib import Path
-from typing import Union
+from uuid import uuid4
+import matplotlib.pyplot as plt
 
 # Import module and files
 from fezrs.utils.file_handler import FileHandler
-from fezrs.utils.type_handler import PathLike
+from fezrs.utils.type_handler import BandPathType, BandPathsType
 
-class BaseTool:
-    """
-    ## BaseTool (class)
-    A base class for FEZrs tools that process different spectral bands.
 
-    ### Description:
-    This class provides a foundation for implementing various spectral analysis tools.
-    It handles the initialization of file paths using the FileHandler and enforces the 
-    implementation of core methods in subclasses.
+# Definition abstract class
+class BaseTool(ABC):
 
-    ### Attributes:
-        files_handler (FileHandler): An instance of FileHandler that manages the spectral band files.
-    """
-    def __init__(self, **band_file_path: dict[str, Union[str, Path]]):
-        """
-        ## __init__ (method)
-        Initialize the BaseTool class
-        
-        ### Args:
-        band_file_path (dict[str, Union[str, Path]]): A dictionary mapping band names to file paths.
-        
-        """
-        self.files_handler = FileHandler(**band_file_path)
+    def __init__(self, **bands_path: BandPathsType):
+        self._output = None
+        self.__tool_name = self.__class__.__name__.replace("Calculator", "")
 
-    def validate(self):
+        self.files_handler = FileHandler(**bands_path)
+
+    def _validate(self):
         raise NotImplementedError("Subclasses should implement this method")
 
-    def calculate(self):
+    def process(self):
+        self._validate()
         raise NotImplementedError("Subclasses should implement this method")
 
-    def export_file(self, output_path: PathLike):
-        raise NotImplementedError("Subclasses should implement this method")
-    def run(self, output_path: PathLike, **export_kwargs):
-        """
-        ## run (Method)
-        Runs the full pipeline: validation, calculation, and exporting the image.
+    def _customize_export_file(self, ax):
+        pass
 
-        ### Args:
-            output_path (str or Path): Directory where the file will be saved.
-            **export_kwargs: Additional arguments to customize the export (e.g., figsize, colormap).
-        """
-        self.validate()
-        self.calculate()
-        self.export_file(output_path, **export_kwargs)
+    def _export_file(
+        self,
+        output_path: BandPathType,
+        title: str | None = None,
+        figsize: tuple = (10, 10),
+        show_axis: bool = False,
+        colormap: str = None,
+        show_colorbar: bool = False,
+        filename_prefix: str = "Tool_output",
+        dpi: int = 500,
+        bbox_inches: str = "tight",
+        grid: bool = True,
+        nrows: int = 1,
+        ncols: int = 1,
+    ):
+        filename_prefix = self.__tool_name
+
+        # Check output property is not empty
+        if self._output is None:
+            raise ValueError("Data not computed.")
+
+        # Check the output path is exist and if not create that directory(ies)
+        output_path = Path(output_path)
+        output_path.mkdir(parents=True, exist_ok=True)
+
+        # Run plot methods
+        fig, ax = plt.subplots(figsize=figsize, nrows=nrows, ncols=ncols)
+        im = ax.imshow(self._output, cmap=colormap)
+        plt.grid(grid)
+
+        # Arguments conditions
+        if not show_axis:
+            ax.axis("off")
+
+        if show_colorbar:
+            fig.colorbar(im, ax=ax)
+
+        if title:
+            plt.title(f"{title}-FEZrs")
+
+        self._customize_export_file(ax)
+
+        # Export file
+        filename = f"{output_path}/{filename_prefix}_{uuid4().hex}.png"
+        fig.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
+
+        # Close plt and return value
+        plt.close(fig)
+        return filename
+
+    def execute(
+        self,
+        output_path: BandPathType,
+        title: str | None = None,
+        figsize: tuple = (10, 10),
+        show_axis: bool = False,
+        colormap: str = None,
+        show_colorbar: bool = False,
+        filename_prefix: str = "Tool_output",
+        dpi: int = 500,
+        bbox_inches: str = "tight",
+        grid: bool = True,
+        nrows: int = None,
+        ncols: int = None,
+    ):
+        self._validate()
+        self.process()
+        self._export_file(
+            output_path,
+            title,
+            figsize,
+            show_axis,
+            colormap,
+            show_colorbar,
+            filename_prefix,
+            dpi,
+            bbox_inches,
+            grid,
+        )

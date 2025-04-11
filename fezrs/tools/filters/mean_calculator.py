@@ -1,5 +1,5 @@
 # Import packages and libraries
-from cv2 import GaussianBlur
+from cv2 import blur
 from pathlib import Path
 
 # Import module and files
@@ -7,7 +7,7 @@ from fezrs.base import BaseTool
 from fezrs.utils.type_handler import BandPathType
 
 
-class GuassianCalculator(BaseTool):
+class MeanCalculator(BaseTool):
 
     def __init__(self, tif_path: BandPathType):
         super().__init__(tif_path=tif_path)
@@ -24,9 +24,7 @@ class GuassianCalculator(BaseTool):
         pass
 
     def process(self):
-        self._output = GaussianBlur(
-            self.metadata_bands["tif"]["image_skimage"], (13, 13), 0
-        )
+        self._output = blur(self.metadata_bands["tif"]["image_skimage"], (9, 9))
         return self._output
 
     def execute(
@@ -60,6 +58,6 @@ class GuassianCalculator(BaseTool):
 if __name__ == "__main__":
     tif_path = Path.cwd() / "data/IMG.tif"
 
-    calculator = GuassianCalculator(tif_path=tif_path).execute(
-        output_path="./", title="Gaussian output"
+    calculator = MeanCalculator(tif_path=tif_path).execute(
+        output_path="./", title="Mean output"
     )

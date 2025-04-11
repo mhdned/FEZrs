@@ -3,9 +3,13 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage import io
-from typing import Optional, Dict
+from typing import Optional, Dict, List
+
+# Import module and files
+from fezrs.utils.type_handler import BandPathType, BandNameType, BandTypes
 
 
+# Helper functions
 def _load_image(path: Optional[str]) -> Optional[np.ndarray]:
     """Loads an image from the given path if it exists."""
     if path and os.path.exists(path):
@@ -36,26 +40,17 @@ def _metadata_image(path: str) -> Dict[str, np.ndarray]:
 
 
 class FileHandler:
-    """
-    ## FileHandler (class)
-    Handles loading, normalizing, and retrieving metadata for image bands.
-    """
-
     def __init__(
         self,
-        tif_path: Optional[str] = None,
-        red_path: Optional[str] = None,
-        nir_path: Optional[str] = None,
-        blue_path: Optional[str] = None,
-        swir1_path: Optional[str] = None,
-        swir2_path: Optional[str] = None,
-        green_path: Optional[str] = None,
+        red_path: Optional[BandPathType] = None,
+        green_path: Optional[BandPathType] = None,
+        blue_path: Optional[BandPathType] = None,
+        nir_path: Optional[BandPathType] = None,
+        swir1_path: Optional[BandPathType] = None,
+        swir2_path: Optional[BandPathType] = None,
+        tif_path: Optional[BandPathType] = None,
     ):
-        """
-        ## __init__ (method)
-        Initializes FileHandler with optional paths for different bands.
-        """
-        self.band_paths = {
+        self.band_paths: BandTypes = {
             "tif": tif_path,
             "red": red_path,
             "nir": nir_path,
@@ -65,29 +60,27 @@ class FileHandler:
             "green": green_path,
         }
 
-        self.bands = {key: _load_image(path) for key, path in self.band_paths.items()}
+        self.bands: BandTypes = {
+            key: _load_image(path) for key, path in self.band_paths.items()
+        }
 
-    def get_normalize_bands(self) -> Dict[str, Optional[np.ndarray]]:
-        """
-        ## get_normalize_bands (method)
-        Returns a dictionary of normalized bands.
-        """
-        return {band: _normalize(image) for band, image in self.bands.items()}
-
-    def get_metadata_bands(self, requested_bands: Optional[list] = None) -> Dict[str, Dict]:
-        """
-        ## get_metadata_bands (method)
-        Returns metadata only for the requested bands.
-        
-        ### Args:
-            requested_bands (list, optional): List of band names to retrieve metadata for.
-            If None, returns metadata for all available bands.
-
-        ### Returns:
-            dict: Metadata for requested bands.
-        """
+    def get_normalized_bands(
+        self, requested_bands: Optional[List[BandNameType]] = None
+    ):
         if requested_bands is None:
-            requested_bands = self.bands.keys() 
+            requested_bands = list(self.bands.keys())
+
+        return {
+            band: _normalize(self.bands[band])
+            for band in requested_bands
+            if self.bands.get(band) is not None
+        }
+
+    def get_metadata_bands(
+        self, requested_bands: Optional[list[BandNameType]] = None
+    ) -> Dict[str, Dict]:
+        if requested_bands is None:
+            requested_bands = self.bands.keys()
 
         metadata = {}
         for band in requested_bands:
@@ -96,3 +89,9 @@ class FileHandler:
                 metadata[band] = _metadata_image(path)
 
         return metadata
+
+    def get_images_collection(self) -> any:
+        image_columns = {
+            key: value for key, value in self.band_paths.items() if value is not None
+        }
+        return io.imread_collection(list(image_columns.values()))
