@@ -1,0 +1,59 @@
+name: PyPI Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pypi_publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools setuptools_scm wheel twine build
+
+      - name: Configure Git User  
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+
+      - name: Automatically bump version
+        run: |
+          OLD_VERSION=$(python setup.py --version)
+          echo "Current version: $OLD_VERSION"
+          
+          NEW_VERSION=$(echo $OLD_VERSION | awk -F. -v OFS=. '{$NF++;print}')
+          echo "New version: $NEW_VERSION"
+          
+          echo $NEW_VERSION > VERSION  # Write the new version to VERSION file
+          git add VERSION
+          git commit -m "Bump version to $NEW_VERSION"
+          git tag $NEW_VERSION  # Create a new tag with the new version
+
+      - name: Commit & Push the New Version
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}  # The Personal Access Token
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
+          git push origin main --tags
+    
+      - name: Build and Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          python -m build
+          python -m twine upload dist/*  # Upload the built package to PyPI

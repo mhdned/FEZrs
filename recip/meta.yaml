@@ -1,0 +1,42 @@
+{% set version = environ.get('FEZRS_VERSION', '0.0.0') %}
+{% set sha256 = environ.get('SHA256_HASH', '') %}
+
+
+package:
+  name: fezrs
+  version: "{{ version }}"
+
+source:
+  url: https://pypi.io/packages/source/f/fezrs/fezrs-{{ version }}.tar.gz
+  sha256: "{{ sha256 }}"
+
+build:
+  number: 1
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir"
+
+requirements:
+  host:
+    - python >=3.8
+    - pip
+    - setuptools
+  run:
+    - python >=3.8
+    - numpy
+    - matplotlib
+    - scikit-image
+    - scikit-learn
+    - fastapi
+    - opencv
+
+test:
+  imports:
+    - fezrs
+  commands:
+    - pytest
+
+about:
+  home: https://github.com/FEZtool-team/fezrs
+  license: MIT
+  license_file: LICENSE
+  summary: "Your package description here."
