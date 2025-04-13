@@ -1,4 +1,5 @@
 numpy
+pydantic
 matplotlib
 scikit-learn
 scikit-image
