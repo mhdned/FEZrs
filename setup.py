@@ -13,6 +13,7 @@ setup(
     packages=["fezrs"],
     install_requires=[
         "numpy",
+        "pydantic",
         "matplotlib",
         "scikit-learn",
         "scikit-image",
