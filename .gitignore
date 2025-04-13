@@ -1,9 +1,11 @@
 # Default directories
 .qodo
+.vscode
 
 # Develop directories
 /data
 /commands
+/.pytest_cache
 
 # Develop files
 *_output_*.png
