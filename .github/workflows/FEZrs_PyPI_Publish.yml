@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # اضافه کردن تریگر برای اجرای دستی
+  workflow_dispatch:
 
 jobs:
   pypi_publish:
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.10
+          python-version: "3.10"
 
       - name: Verify Python Version
         run: python --version
@@ -41,7 +41,7 @@ jobs:
 
       - name: Commit & Push the New Version
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}  # The Personal Access Token
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions@users.noreply.github.com"
