@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:  # اضافه کردن تریگر برای اجرای دستی
 
 jobs:
   pypi_publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
@@ -40,8 +41,7 @@ jobs:
 
       - name: Commit & Push the New Version
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-          
+          GH_PAT: ${{ secrets.GH_PAT }}  # The Personal Access Token
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions@users.noreply.github.com"
