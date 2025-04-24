@@ -26,3 +26,11 @@ class BandPathsType(TypedDict, total=False):
     swir1_path: BandPathType
     swir2_path: BandPathType
     tif_path: BandPathType
+
+
+PropertyGLCMType = Literal[
+    "contrast",
+    "ASM",
+    "dissimilarity",
+    "homogeneity",
+]
