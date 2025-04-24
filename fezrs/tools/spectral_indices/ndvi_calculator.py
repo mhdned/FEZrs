@@ -8,7 +8,7 @@ from fezrs.utils.type_handler import BandPathType
 
 
 # Calculator class
-class NDVIcalculator(BaseTool):
+class NDVICalculator(BaseTool):
     def __init__(
         self,
         nir_path: BandPathType,
@@ -60,6 +60,6 @@ if __name__ == "__main__":
     nir_path = Path.cwd() / "data/NIR.tif"
     red_path = Path.cwd() / "data/Red.tif"
 
-    calculator = NDVIcalculator(nir_path=nir_path, red_path=red_path).execute(
+    calculator = NDVICalculator(nir_path=nir_path, red_path=red_path).execute(
         output_path="./", title="NDVI output"
     )

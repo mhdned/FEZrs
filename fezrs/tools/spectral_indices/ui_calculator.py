@@ -8,7 +8,7 @@ from fezrs.utils.type_handler import BandPathType
 
 
 # Calculator class
-class UIcalculator(BaseTool):
+class UICalculator(BaseTool):
     def __init__(
         self,
         nir_path: BandPathType,
@@ -60,6 +60,6 @@ if __name__ == "__main__":
     nir_path = Path.cwd() / "data/NIR.tif"
     swir2_path = Path.cwd() / "data/SWIR2.tif"
 
-    calculator = UIcalculator(nir_path=nir_path, swir2_path=swir2_path).execute(
+    calculator = UICalculator(nir_path=nir_path, swir2_path=swir2_path).execute(
         output_path="./", title="UI output"
     )

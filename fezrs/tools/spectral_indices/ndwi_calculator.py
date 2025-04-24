@@ -8,7 +8,7 @@ from fezrs.utils.type_handler import BandPathType
 
 
 # Calculator class
-class NDWIcalculator(BaseTool):
+class NDWICalculator(BaseTool):
     def __init__(
         self,
         nir_path: BandPathType,
@@ -60,6 +60,6 @@ if __name__ == "__main__":
     nir_path = Path.cwd() / "data/NIR.tif"
     green_path = Path.cwd() / "data/Green.tif"
 
-    calculator = NDWIcalculator(nir_path=nir_path, green_path=green_path).execute(
+    calculator = NDWICalculator(nir_path=nir_path, green_path=green_path).execute(
         output_path="./", title="NDWI output"
     )

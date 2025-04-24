@@ -8,7 +8,7 @@ from fezrs.utils.type_handler import BandPathType
 
 
 # Calculator class
-class SAVIcalculator(BaseTool):
+class SAVICalculator(BaseTool):
     def __init__(
         self,
         nir_path: BandPathType,
@@ -60,6 +60,6 @@ if __name__ == "__main__":
     nir_path = Path.cwd() / "data/NIR.tif"
     red_path = Path.cwd() / "data/Red.tif"
 
-    calculator = SAVIcalculator(nir_path=nir_path, red_path=red_path).execute(
+    calculator = SAVICalculator(nir_path=nir_path, red_path=red_path).execute(
         output_path="./", title="SAVI output"
     )
