@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read_version():
@@ -11,6 +11,7 @@ setup(
     version=read_version(),
     setup_requires=["setuptools", "setuptools_scm"],
     packages=["fezrs"],
+    packages=find_packages(),
     install_requires=[
         "numpy",
         "pydantic",
