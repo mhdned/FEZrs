@@ -1,4 +1,4 @@
-from .afvi_calculator import AFVICalculato
+from .afvi_calculator import AFVICalculator
 from .bi_calculator import BICalculator
 from .ndvi_calculator import NDVICalculator
 from .ndwi_calculator import NDWICalculator
