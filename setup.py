@@ -10,7 +10,7 @@ setup(
     name="fezrs",
     version=read_version(),
     setup_requires=["setuptools", "setuptools_scm"],
-    packages=find_packages(),
+    packages=find_packages(include=["fezrs", "fezrs.*"]),
     install_requires=[
         "numpy",
         "pydantic",

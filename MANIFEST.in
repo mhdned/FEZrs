@@ -1,0 +1,3 @@
+include README.md
+recursive-include fezrs/tools *
+recursive-include fezrs/utils *
