@@ -39,12 +39,12 @@ class LogAdjustCalculator(BaseTool):
     def _customize_export_file(self, ax):
         pass
 
-    def chart_export(
+    def histogram_export(
         self,
         output_path: BandPathType,
         title: str | None = None,
         figsize: tuple = (10, 10),
-        filename_prefix: str = "Chart_Log_adjust_IE_Tool_output",
+        filename_prefix: str = "Histogram_Log_adjust_IE_Tool_output",
         dpi: int = 500,
         bbox_inches: str = "tight",
     ):
@@ -104,4 +104,4 @@ if __name__ == "__main__":
 
     calculator = LogAdjustCalculator(
         nir_path=nir_path, inverse=False, gain=1
-    ).chart_export("./", title="LogAdjust IE")
+    ).histogram_export("./", title="LogAdjust IE")

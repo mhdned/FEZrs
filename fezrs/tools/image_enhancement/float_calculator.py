@@ -22,12 +22,12 @@ class FloatCalculator(BaseTool):
         self._output = img_as_float(self.metadata_bands["nir"]["image_skimage"])
         return self._output
 
-    def chart_export(
+    def histogram_export(
         self,
         output_path: BandPathType,
         title: str | None = None,
         figsize: tuple = (10, 10),
-        filename_prefix: str = "Chart_Float_IE_Tool_output",
+        filename_prefix: str = "Histogram_Float_IE_Tool_output",
         dpi: int = 500,
         bbox_inches: str = "tight",
     ):
@@ -86,4 +86,4 @@ if __name__ == "__main__":
     nir_path = Path.cwd() / "data/NIR.tif"
 
     calculator = FloatCalculator(nir_path=nir_path).execute("./", title="Float IE")
-    calculator = FloatCalculator(nir_path=nir_path).chart_export("./")
+    calculator = FloatCalculator(nir_path=nir_path).histogram_export("./")

@@ -42,12 +42,12 @@ class SigmoidAdjustCalculator(BaseTool):
     def _customize_export_file(self, ax):
         pass
 
-    def chart_export(
+    def histogram_export(
         self,
         output_path: BandPathType,
         title: str | None = None,
         figsize: tuple = (10, 10),
-        filename_prefix: str = "Chart_Sigmoid_Adjust_IE_Tool_output",
+        filename_prefix: str = "Histogram_Sigmoid_Adjust_IE_Tool_output",
         dpi: int = 500,
         bbox_inches: str = "tight",
     ):

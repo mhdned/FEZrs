@@ -31,12 +31,12 @@ class EqualizeCalculator(BaseTool):
     def _customize_export_file(self, ax):
         pass
 
-    def chart_export(
+    def histogram_export(
         self,
         output_path: BandPathType,
         title: str | None = None,
         figsize: tuple = (10, 10),
-        filename_prefix: str = "Chart_Equlize_IE_Tool_output",
+        filename_prefix: str = "Histogram_Equlize_IE_Tool_output",
         dpi: int = 500,
         bbox_inches: str = "tight",
     ):
@@ -94,6 +94,6 @@ class EqualizeCalculator(BaseTool):
 if __name__ == "__main__":
     nir_path = Path.cwd() / "data/NIR.tif"
 
-    calculator = EqualizeCalculator(nir_path=nir_path).chart_export(
+    calculator = EqualizeCalculator(nir_path=nir_path).histogram_export(
         "./", title="Equalize IE"
     )

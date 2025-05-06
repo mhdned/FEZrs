@@ -46,12 +46,12 @@ class GammaCalculator(BaseTool):
     def _customize_export_file(self, ax):
         pass
 
-    def chart_export(
+    def histogram_export(
         self,
         output_path: BandPathType,
         title: str | None = None,
         figsize: tuple = (10, 10),
-        filename_prefix: str = "Chart_Gamma_IE_Tool_output",
+        filename_prefix: str = "Histogram_Gamma_IE_Tool_output",
         dpi: int = 500,
         bbox_inches: str = "tight",
     ):
@@ -109,6 +109,6 @@ class GammaCalculator(BaseTool):
 if __name__ == "__main__":
     nir_path = Path.cwd() / "data/NIR.tif"
 
-    calculator = GammaCalculator(nir_path=nir_path, gamma=0.2, gain=1).chart_export(
+    calculator = GammaCalculator(nir_path=nir_path, gamma=0.2, gain=1).histogram_export(
         "./", title="Gamma IE"
     )
