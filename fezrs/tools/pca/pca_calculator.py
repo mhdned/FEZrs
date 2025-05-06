@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA as skpc
 
 # Import module and files
 from fezrs.base import BaseTool
-from fezrs.utils.type_handler import BandPathType
+from fezrs.utils.type_handler import BandPathType, BandNamePCAType
 
 
 class PCACalculator(BaseTool):
@@ -20,6 +20,7 @@ class PCACalculator(BaseTool):
         nir_path: BandPathType,
         swir1_path: BandPathType,
         swir2_path: BandPathType,
+        selectBand: BandNamePCAType | None = None,
     ):
         super().__init__(
             red_path=red_path,
@@ -46,6 +47,17 @@ class PCACalculator(BaseTool):
             self.metadata_bands["red"]["height"],
         )
 
+        self.selectBand = selectBand
+
+        self.bindTheBandsToNumber = {
+            "red": 0,
+            "nir": 1,
+            "blue": 2,
+            "swir1": 3,
+            "swir2": 4,
+            "green": 5,
+        }
+
     def _validate(self):
         pass
 
@@ -62,6 +74,49 @@ class PCACalculator(BaseTool):
 
     def _customize_export_file(self, ax):
         pass
+
+    def histogram_export(
+        self,
+        output_path: BandPathType,
+        title: str | None = None,
+        figsize: tuple = (10, 10),
+        filename_prefix: str = "Histogram_PCA_Tool_output",
+        dpi: int = 500,
+        bbox_inches: str = "tight",
+        grid: bool = True,
+        # show_axis: bool = False,
+        # colormap: str = None,
+        # show_colorbar: bool = False,
+    ):
+        if self.selectBand is None:
+            raise "You cant use histogram method if you are not passed select band value"
+        self._validate()
+        self.process()
+
+        fig, ax = plt.subplots(figsize=figsize)
+
+        pca_component = self._output[self.bindTheBandsToNumber[self.selectBand]]
+
+        ax.hist(
+            pca_component.ravel(),
+            bins=256,
+            density=True,
+            histtype="bar",
+            color="black",
+        )
+        ax.set_title(f"Histogram of PCA Band {self.selectBand.capitalize()}")
+
+        if title:
+            plt.title(f"{title}-FEZrs")
+
+        plt.xlabel("Bands")
+        plt.ylabel("Intensity")
+        plt.grid(grid)
+
+        filename = f"{output_path}/{filename_prefix}_{uuid4().hex}.png"
+        plt.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
+
+        plt.close()
 
     def _export_file(
         self,
@@ -107,7 +162,7 @@ class PCACalculator(BaseTool):
         title=None,
         figsize=(20, 30),
         show_axis=False,
-        colormap=None,
+        colormap="gray",
         show_colorbar=False,
         filename_prefix="Tool_output",
         dpi=500,
@@ -148,4 +203,7 @@ if __name__ == "__main__":
         nir_path=nir_path,
         swir1_path=swir1_path,
         swir2_path=swir2_path,
-    ).execute(output_path="./", title="PCA output")
+        selectBand="swir2",
+    ).histogram_export(
+        output_path="./",
+    )
