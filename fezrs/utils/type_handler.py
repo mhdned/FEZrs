@@ -34,3 +34,5 @@ PropertyGLCMType = Literal[
     "dissimilarity",
     "homogeneity",
 ]
+
+BandNamePCAType = Literal["red", "nir", "blue", "swir1", "swir2", "green"]
