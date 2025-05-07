@@ -74,6 +74,8 @@ class OriginalRGBCalculator(BaseTool):
         fig.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
         plt.close(fig)
 
+        return self
+
     def execute(
         self,
         output_path,

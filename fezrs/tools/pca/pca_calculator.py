@@ -118,6 +118,8 @@ class PCACalculator(BaseTool):
 
         plt.close()
 
+        return self
+
     def _export_file(
         self,
         output_path,

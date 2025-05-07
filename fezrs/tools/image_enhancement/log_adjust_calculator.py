@@ -67,6 +67,8 @@ class LogAdjustCalculator(BaseTool):
         fig.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
         plt.close(fig)
 
+        return self
+
     def execute(
         self,
         output_path,
@@ -102,6 +104,8 @@ class LogAdjustCalculator(BaseTool):
 if __name__ == "__main__":
     nir_path = Path.cwd() / "data/NIR.tif"
 
-    calculator = LogAdjustCalculator(
-        nir_path=nir_path, inverse=False, gain=1
-    ).histogram_export("./", title="LogAdjust IE")
+    calculator = (
+        LogAdjustCalculator(nir_path=nir_path, inverse=False, gain=1)
+        .histogram_export("./", title="LogAdjust IE")
+        .execute("./")
+    )

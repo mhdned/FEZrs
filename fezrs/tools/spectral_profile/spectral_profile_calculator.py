@@ -96,6 +96,8 @@ class SpectralProfileCalculator(BaseTool):
 
         plt.close()
 
+        return self
+
     def execute(
         self,
         output_path,

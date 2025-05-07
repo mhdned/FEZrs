@@ -107,3 +107,4 @@ class BaseTool(ABC):
             bbox_inches,
             grid,
         )
+        return self
