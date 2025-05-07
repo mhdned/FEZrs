@@ -1,14 +1,16 @@
 from setuptools import setup, find_packages
+from configparser import ConfigParser
 
 
-def read_version():
-    with open("VERSION", "r") as f:
-        return f.read().strip()
+def read_version_from_bumpversion():
+    config = ConfigParser()
+    config.read(".bumpversion.cfg")
+    return config["bumpversion"]["current_version"]
 
 
 setup(
     name="fezrs",
-    version=read_version(),
+    version=read_version_from_bumpversion(),
     setup_requires=["setuptools", "setuptools_scm"],
     packages=find_packages(include=["fezrs", "fezrs.*"]),
     install_requires=[
