@@ -1,8 +1,10 @@
 # Import packages and libraries
 from abc import ABC
+from PIL import Image
 from pathlib import Path
 from uuid import uuid4
 import matplotlib.pyplot as plt
+
 
 # Import module and files
 from fezrs.utils.file_handler import FileHandler
@@ -15,6 +17,12 @@ class BaseTool(ABC):
     def __init__(self, **bands_path: BandPathsType):
         self._output = None
         self.__tool_name = self.__class__.__name__.replace("Calculator", "")
+
+        logo_path = Path.cwd() / "fezrs/media/logo_watermark.png"
+        logo_img = Image.open(logo_path).convert("RGBA")
+        logo_img = logo_img.resize((80, 80))
+
+        self._logo_watermark = logo_img
 
         self.files_handler = FileHandler(**bands_path)
 
