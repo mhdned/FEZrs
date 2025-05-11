@@ -3,6 +3,7 @@ from abc import ABC
 from PIL import Image
 from pathlib import Path
 from uuid import uuid4
+from importlib import resources
 import matplotlib.pyplot as plt
 
 
@@ -18,9 +19,9 @@ class BaseTool(ABC):
         self._output = None
         self.__tool_name = self.__class__.__name__.replace("Calculator", "")
 
-        logo_path = Path.cwd() / "fezrs/media/logo_watermark.png"
-        logo_img = Image.open(logo_path).convert("RGBA")
-        logo_img = logo_img.resize((80, 80))
+        with resources.path("fezrs.media", "logo_watermark.png") as logo_path:
+            logo_img = Image.open(logo_path).convert("RGBA")
+            logo_img = logo_img.resize((80, 80))
 
         self._logo_watermark = logo_img
 
