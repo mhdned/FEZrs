@@ -13,8 +13,11 @@ setup(
     version=read_version_from_bumpversion(),
     setup_requires=["setuptools", "setuptools_scm"],
     packages=find_packages(include=["fezrs", "fezrs.*"]),
+    include_package_data=True,
+    package_data={"fezrs": ["media/logo_watermark.png"]},
     install_requires=[
         "numpy",
+        "Pillow",
         "pydantic",
         "matplotlib",
         "scikit-learn",
