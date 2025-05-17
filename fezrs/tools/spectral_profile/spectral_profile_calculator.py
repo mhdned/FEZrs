@@ -9,9 +9,10 @@ import matplotlib.pyplot as plt
 # Import module and files
 from fezrs.base import BaseTool
 from fezrs.utils.type_handler import BandPathType
+from fezrs.utils.histogram_handler import HistogramExportMixin
 
 
-class SpectralProfileCalculator(BaseTool):
+class SpectralProfileCalculator(BaseTool, HistogramExportMixin):
 
     def __init__(
         self,
@@ -81,20 +82,20 @@ class SpectralProfileCalculator(BaseTool):
         self._validate()
         self.process()
 
-        plt.figure(figsize=figsize)
-        plt.plot(self.xaxis, self.yaxis)
+        fig, ax = plt.subplots(figsize=figsize)
+
+        ax.figure(figsize=figsize)
+        ax.plot(self.xaxis, self.yaxis)
 
         if title:
             plt.title(f"{title}-FEZrs")
 
-        plt.xlabel("Bands")
-        plt.ylabel("Intensity")
-        plt.grid(grid)
+        ax.xlabel("Bands")
+        ax.ylabel("Intensity")
+        ax.grid(grid)
 
-        filename = f"{output_path}/{filename_prefix}_{uuid4().hex}.png"
-        plt.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
-
-        plt.close()
+        self._add_watermark(ax)
+        self._save_histogram_figure(ax, output_path, filename_prefix, dpi, bbox_inches)
 
         return self
 

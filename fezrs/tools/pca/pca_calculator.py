@@ -8,9 +8,10 @@ from sklearn.decomposition import PCA as skpc
 # Import module and files
 from fezrs.base import BaseTool
 from fezrs.utils.type_handler import BandPathType, BandNamePCAType
+from fezrs.utils.histogram_handler import HistogramExportMixin
 
 
-class PCACalculator(BaseTool):
+class PCACalculator(BaseTool, HistogramExportMixin):
 
     def __init__(
         self,
@@ -113,10 +114,8 @@ class PCACalculator(BaseTool):
         plt.ylabel("Intensity")
         plt.grid(grid)
 
-        filename = f"{output_path}/{filename_prefix}_{uuid4().hex}.png"
-        plt.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
-
-        plt.close()
+        self._add_watermark(ax)
+        self._save_histogram_figure(ax, output_path, filename_prefix, dpi, bbox_inches)
 
         return self
 

@@ -3,16 +3,16 @@ from uuid import uuid4
 from pathlib import Path
 import matplotlib.pyplot as plt
 from skimage import exposure, img_as_float
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 
 # Import module and files
 from fezrs.base import BaseTool
 from fezrs.utils.type_handler import BandPathType
+from fezrs.utils.histogram_handler import HistogramExportMixin
 
 
 # Calculator class
-class AdaptiveCalculator(BaseTool):
+class AdaptiveCalculator(BaseTool, HistogramExportMixin):
     def __init__(
         self,
         nir_path: BandPathType,
@@ -64,19 +64,8 @@ class AdaptiveCalculator(BaseTool):
         ax.ticklabel_format(style="plain")
         ax.set_title(f"{title}-FEZrs")
 
-        imagebox = OffsetImage(self._logo_watermark, zoom=1, alpha=0.3)
-        ab = AnnotationBbox(
-            imagebox,
-            (0.95, 0.95),
-            xycoords="axes fraction",
-            frameon=False,
-            box_alignment=(1, 1),
-        )
-        ax.add_artist(ab)
-
-        filename = f"{output_path}/{filename_prefix}_{uuid4().hex}.png"
-        fig.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
-        plt.close(fig)
+        self._add_watermark(ax)
+        self._save_histogram_figure(ax, output_path, filename_prefix, dpi, bbox_inches)
 
         return self
 

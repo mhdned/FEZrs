@@ -8,10 +8,11 @@ import matplotlib.pyplot as plt
 # Import module and files
 from fezrs.base import BaseTool
 from fezrs.utils.type_handler import BandPathType
+from fezrs.utils.histogram_handler import HistogramExportMixin
 
 
 # Calculator class
-class GammaRGBCalculator(BaseTool):
+class GammaRGBCalculator(BaseTool, HistogramExportMixin):
     def __init__(
         self,
         red_path: BandPathType,
@@ -75,9 +76,8 @@ class GammaRGBCalculator(BaseTool):
         ax.ticklabel_format(style="plain")
         ax.set_title(f"{title}-FEZrs")
 
-        filename = f"{output_path}/{filename_prefix}_{uuid4().hex}.png"
-        fig.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
-        plt.close(fig)
+        self._add_watermark(ax)
+        self._save_histogram_figure(ax, output_path, filename_prefix, dpi, bbox_inches)
 
         return self
 

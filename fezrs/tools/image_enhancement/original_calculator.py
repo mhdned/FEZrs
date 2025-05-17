@@ -7,10 +7,11 @@ from skimage import img_as_float
 # Import module and files
 from fezrs.base import BaseTool
 from fezrs.utils.type_handler import BandPathType
+from fezrs.utils.histogram_handler import HistogramExportMixin
 
 
 # Calculator class
-class OriginalCalculator(BaseTool):
+class OriginalCalculator(BaseTool, HistogramExportMixin):
     def __init__(
         self,
         nir_path: BandPathType,
@@ -54,9 +55,8 @@ class OriginalCalculator(BaseTool):
         ax.ticklabel_format(style="plain")
         ax.set_title(f"{title}-FEZrs")
 
-        filename = f"{output_path}/{filename_prefix}_{uuid4().hex}.png"
-        fig.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
-        plt.close(fig)
+        self._add_watermark(ax)
+        self._save_histogram_figure(ax, output_path, filename_prefix, dpi, bbox_inches)
 
         return self
 
