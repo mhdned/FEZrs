@@ -18,16 +18,15 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.10"
-          miniforge-variant: Miniforge3
-
+          miniforge-variant: Miniforge3  # use a valid variant
 
       - name: Install conda-build and anaconda-client
         run: |
           conda install -y conda-build anaconda-client
 
-      - name: Extract version and sha256 from PyPI
+      - name: Extract version and sha256 from .bumpversion.cfg and PyPI
         run: |
-          VERSION=$(python -c "import setuptools.config; print(setuptools.config.read_configuration('setup.cfg')['metadata']['version'])")
+          VERSION=$(python -c "from configparser import ConfigParser; cfg=ConfigParser(); cfg.read('.bumpversion.cfg'); print(cfg['bumpversion']['current_version'])")
           SHA256=$(curl -sL https://pypi.io/packages/source/f/fezrs/fezrs-${VERSION}.tar.gz | sha256sum | awk '{print $1}')
           echo "FEZRS_VERSION=${VERSION}" >> $GITHUB_ENV
           echo "SHA256_HASH=${SHA256}" >> $GITHUB_ENV
