@@ -17,7 +17,6 @@ requirements:
     - python >=3.10
     - pip
     - setuptools
-    - mesa
   run:
     - python >=3.10
     - numpy
@@ -26,16 +25,16 @@ requirements:
     - scikit-learn
     - fastapi
     - opencv-python
-    - mesa
 
-test:
-  imports:
-    - fezrs
+
+# test:
+#   imports:
+#     - fezrs
   # skip tests temporarily because of missing libEGL dependency
 
 about:
   home: https://github.com/FEZtool-team/FEZrs
-  license: MIT
+  license: Apache
   license_file: LICENSE
   summary: "FEZrs is a Python package for feature extraction and analysis in remote sensing imagery."
 
