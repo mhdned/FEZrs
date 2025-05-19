@@ -35,20 +35,24 @@ jobs:
           echo "SHA256_HASH=${SHA256}" >> $GITHUB_ENV
 
       - name: Build Conda package
-        id: build_conda
         shell: bash -l {0}
         env:
           FEZRS_VERSION: ${{ env.FEZRS_VERSION }}
           SHA256_HASH: ${{ env.SHA256_HASH }}
         run: |
-          OUTPUT_PATH=$(conda-build recip/ --output)
-          echo "output_path=$OUTPUT_PATH" >> $GITHUB_OUTPUT
           conda-build recip/
+
+      - name: Configure Anaconda API token
+        shell: bash -l {0}
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
+        run: |
+          mkdir -p ~/.conda
+          echo -e "channels:\n  - defaults\nanaconda_upload: true\nclient_ssl_verify: true\n" > ~/.condarc
+          mkdir -p ~/.anaconda
+          echo "$ANACONDA_API_KEY" > ~/.anaconda/token.txt
 
       - name: Upload to Anaconda Cloud
         shell: bash -l {0}
-        env:
-          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
         run: |
-          echo "$ANACONDA_API_TOKEN" | anaconda login --username <USERNAME> --password --quiet
-          anaconda upload "${{ steps.build_conda.outputs.output_path }}" --force
+          anaconda upload $(conda-build recip/ --output) --force
