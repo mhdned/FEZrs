@@ -47,4 +47,4 @@ jobs:
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
         run: |
-          anaconda --token $ANACONDA_API_TOKEN upload $(conda-build recip/ --output) --force
+          anaconda upload "${{ steps.build_conda.outputs.output_path }}" --token $ANACONDA_API_TOKEN --force
