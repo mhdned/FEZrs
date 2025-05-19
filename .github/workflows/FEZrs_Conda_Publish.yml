@@ -42,17 +42,16 @@ jobs:
         run: |
           conda-build recip/
 
-      - name: Configure Anaconda API token
+      - name: Authenticate with Anaconda
         shell: bash -l {0}
         env:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
         run: |
           mkdir -p ~/.conda
-          echo -e "channels:\n  - defaults\nanaconda_upload: true\nclient_ssl_verify: true\n" > ~/.condarc
+          echo -e "channels:\n  - defaults\nanaconda_upload: true\n" > ~/.condarc
           mkdir -p ~/.anaconda
-          echo "$ANACONDA_API_KEY" > ~/.anaconda/token.txt
 
       - name: Upload to Anaconda Cloud
         shell: bash -l {0}
         run: |
-          anaconda upload $(conda-build recip/ --output) --force
+          anaconda --show-traceback upload $(conda-build recip/ --output) --force
