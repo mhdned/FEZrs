@@ -14,17 +14,20 @@ build:
 
 requirements:
   host:
-    - python >=3.8
+    - python >=3.10
     - pip
     - setuptools
+    - mesa-libgl
   run:
-    - python >=3.8
+    - python >=3.10
     - numpy
     - matplotlib
     - scikit-image
     - scikit-learn
     - fastapi
-    - opencv
+    - opencv-python
+    - mesa-libgl
+
 
 test:
   imports:
