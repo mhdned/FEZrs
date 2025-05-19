@@ -13,20 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Miniconda with Mamba
+      - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-update-conda: true
           python-version: "3.10"
-          miniforge-variant: Miniforge3
+          auto-update-conda: true
           mamba: true
 
-      - name: Install conda-build and anaconda-client
+      - name: Install dependencies
         shell: bash -l {0}
         run: |
           mamba install -y conda-build anaconda-client
 
-      - name: Extract version and sha256 from .bumpversion.cfg and PyPI
+      - name: Extract version and sha256
         shell: bash -l {0}
         run: |
           VERSION=$(python -c "from configparser import ConfigParser; cfg=ConfigParser(); cfg.read('.bumpversion.cfg'); print(cfg['bumpversion']['current_version'])")
@@ -34,11 +33,8 @@ jobs:
           echo "FEZRS_VERSION=${VERSION}" >> $GITHUB_ENV
           echo "SHA256_HASH=${SHA256}" >> $GITHUB_ENV
 
-      - name: Build Conda package
+      - name: Build conda package
         shell: bash -l {0}
-        env:
-          FEZRS_VERSION: ${{ env.FEZRS_VERSION }}
-          SHA256_HASH: ${{ env.SHA256_HASH }}
         run: |
           conda-build recip/
 
@@ -48,10 +44,11 @@ jobs:
           ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
         run: |
           mkdir -p ~/.conda
-          echo -e "channels:\n  - defaults\nanaconda_upload: true\n" > ~/.condarc
-          mkdir -p ~/.anaconda
+          echo -e "channels:\n  - defaults\nanaconda_upload: true" > ~/.condarc
+          mkdir -p ~/.binstar
+          echo "{ \"token\": \"$ANACONDA_API_KEY\" }" > ~/.binstar/credentials
 
       - name: Upload to Anaconda Cloud
         shell: bash -l {0}
         run: |
-          anaconda --show-traceback upload $(conda-build recip/ --output) --force
+          anaconda upload $(conda-build recip/ --output) --force
