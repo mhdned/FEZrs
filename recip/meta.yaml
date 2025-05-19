@@ -26,7 +26,7 @@ requirements:
     - scikit-image
     - scikit-learn
     - fastapi
-    - opencv
+    - opencv-python  # corrected package name for conda/pip
 
 test:
   imports:
