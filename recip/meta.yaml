@@ -29,12 +29,8 @@ requirements:
 test:
   imports:
     - fezrs
-  # source_files:
-  #   - tests
-  # requires:
-  #   - pytest
-  # commands:
-  #   - echo "Skipping tests because OpenCV dependencies are missing"
+  # skip tests temporarily because of missing libEGL dependency
+
 
 about:
   home: https://github.com/FEZtool-team/FEZrs
