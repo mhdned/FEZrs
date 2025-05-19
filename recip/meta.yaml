@@ -17,7 +17,7 @@ requirements:
     - python >=3.10
     - pip
     - setuptools
-    - mesa-libgl
+    - mesa
   run:
     - python >=3.10
     - numpy
@@ -26,14 +26,12 @@ requirements:
     - scikit-learn
     - fastapi
     - opencv-python
-    - mesa-libgl
-
+    - mesa
 
 test:
   imports:
     - fezrs
   # skip tests temporarily because of missing libEGL dependency
-
 
 about:
   home: https://github.com/FEZtool-team/FEZrs
