@@ -50,5 +50,5 @@ jobs:
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
         run: |
-          anaconda login --token $ANACONDA_API_TOKEN
+          echo "$ANACONDA_API_TOKEN" | anaconda login --username <USERNAME> --password --quiet
           anaconda upload "${{ steps.build_conda.outputs.output_path }}" --force
