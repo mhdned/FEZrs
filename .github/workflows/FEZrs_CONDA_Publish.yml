@@ -40,11 +40,11 @@ jobs:
           FEZRS_VERSION: ${{ env.FEZRS_VERSION }}
           SHA256_HASH: ${{ env.SHA256_HASH }}
         run: |
-          conda-build recipe/
+          conda-build recip/
 
       - name: Upload to Anaconda Cloud
         shell: bash -l {0}
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
         run: |
-          anaconda --token $ANACONDA_API_TOKEN upload $(conda-build recipe/ --output) --force
+          anaconda --token $ANACONDA_API_TOKEN upload $(conda-build recip/ --output) --force
