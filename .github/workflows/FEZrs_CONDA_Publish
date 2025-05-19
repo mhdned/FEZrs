@@ -1,0 +1,54 @@
+name: Conda Publish
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  conda_publish:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          miniforge-variant: Mambaforge
+          python-version: "3.10"
+
+      - name: Verify Conda and Python Version
+        run: |
+          conda --version
+          python --version
+
+      - name: Install conda-build and anaconda-client
+        run: |
+          conda install -y conda-build anaconda-client
+
+      - name: Bump version
+        run: |
+          pip install bumpversion
+          bumpversion patch  # Or use 'minor' or 'major'
+
+      - name: Commit & Push the New Version
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
+          git push origin main --tags
+
+      - name: Build Conda Package
+        run: conda-build recipe/
+
+      - name: Upload to Anaconda
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        run: |
+          anaconda --token $ANACONDA_API_TOKEN upload $(conda-build recipe/ --output) --force
