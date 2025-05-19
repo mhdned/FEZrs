@@ -18,8 +18,8 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.10"
-          miniforge-variant: miniforge
-          miniforge-version: latest
+          miniforge-variant: Miniforge3
+
 
       - name: Install conda-build and anaconda-client
         run: |
