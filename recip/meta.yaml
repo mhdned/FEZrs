@@ -33,9 +33,17 @@ test:
     - fezrs
   commands:
     - pytest
+  requires:
+    - pytest
+    # - pytest-cov  # optional, for coverage
+    # - requests    # optional, for testing API calls
 
 about:
-  home: https://github.com/FEZtool-team/fezrs
+  home: https://github.com/FEZtool-team/FEZrs
   license: MIT
   license_file: LICENSE
-  summary: "Your package description here."
+  summary: "FEZrs is a Python package for feature extraction and analysis in remote sensing imagery."
+
+extra:
+  recipe-maintainers:
+    - FEZtool-team
