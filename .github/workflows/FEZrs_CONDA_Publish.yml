@@ -2,52 +2,44 @@ name: Conda Publish
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  conda_publish:
+  build-conda:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          miniforge-variant: Mambaforge
           python-version: "3.10"
-
-      - name: Verify Conda and Python Version
-        run: |
-          conda --version
-          python --version
+          miniforge-variant: miniforge
+          miniforge-version: latest
 
       - name: Install conda-build and anaconda-client
         run: |
           conda install -y conda-build anaconda-client
 
-      - name: Bump version
+      - name: Extract version and sha256 from PyPI
         run: |
-          pip install bumpversion
-          bumpversion patch  # Or use 'minor' or 'major'
+          VERSION=$(python -c "import setuptools.config; print(setuptools.config.read_configuration('setup.cfg')['metadata']['version'])")
+          SHA256=$(curl -sL https://pypi.io/packages/source/f/fezrs/fezrs-${VERSION}.tar.gz | sha256sum | awk '{print $1}')
+          echo "FEZRS_VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "SHA256_HASH=${SHA256}" >> $GITHUB_ENV
 
-      - name: Commit & Push the New Version
+      - name: Build Conda package
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          FEZRS_VERSION: ${{ env.FEZRS_VERSION }}
+          SHA256_HASH: ${{ env.SHA256_HASH }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
-          git push origin main --tags
+          conda-build recipe/
 
-      - name: Build Conda Package
-        run: conda-build recipe/
-
-      - name: Upload to Anaconda
+      - name: Upload to Anaconda Cloud
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
         run: |
