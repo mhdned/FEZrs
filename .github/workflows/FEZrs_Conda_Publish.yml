@@ -26,7 +26,7 @@ jobs:
         run: |
           mamba install -y conda-build anaconda-client
 
-      - name: Extract version and sha256
+      - name: Extract version and sha256 from .bumpversion.cfg and PyPI
         shell: bash -l {0}
         run: |
           VERSION=$(python -c "from configparser import ConfigParser; cfg=ConfigParser(); cfg.read('.bumpversion.cfg'); print(cfg['bumpversion']['current_version'])")
@@ -36,22 +36,15 @@ jobs:
 
       - name: Build Conda package
         shell: bash -l {0}
+        env:
+          FEZRS_VERSION: ${{ env.FEZRS_VERSION }}
+          SHA256_HASH: ${{ env.SHA256_HASH }}
         run: |
           conda-build recip/
 
-      - name: Login to Anaconda
+      - name: Upload to Anaconda Cloud
         shell: bash -l {0}
         env:
-          ANACONDA_USERNAME: ${{ secrets.ANACONDA_USERNAME }}
-          ANACONDA_PASSWORD: ${{ secrets.ANACONDA_PASSWORD }}
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
         run: |
-          sudo apt-get update && sudo apt-get install -y expect
-
-          expect <<EOF
-          spawn anaconda login --quiet
-          expect "Username:"
-          send "$env(ANACONDA_USERNAME)\r"
-          expect "Password:"
-          send "$env(ANACONDA_PASSWORD)\r"
-          expect eof
-          EOF
+          anaconda -t $ANACONDA_API_KEY upload $(conda-build recip/ --output) --force
