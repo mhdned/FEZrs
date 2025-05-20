@@ -12,7 +12,7 @@ from fezrs.utils.file_handler import FileHandler
 from fezrs.utils.type_handler import BandPathType, BandPathsType
 
 
-# Definition abstract class
+# Definition abstract class (BaseTool)
 class BaseTool(ABC):
 
     def __init__(self, **bands_path: BandPathsType):
