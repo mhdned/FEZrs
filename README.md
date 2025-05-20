@@ -105,4 +105,4 @@ Special thanks to [**Chakad Cafe**](https://www.chakadcoffee.com/) for the coffe
 
 ## **License**
 
-This project is licensed under the **Apache-2.0 license**.
+This project is licensed under the [**Apache-2.0 license**.](https://github.com/FEZtool-team/FEZrs/edit/main/LICENSE)
