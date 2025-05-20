@@ -22,7 +22,7 @@ pip install fezrs
 Or
 
 ```sh
-conda install feztool::fezrs	
+conda install -c FEZtool fezrs	
 ```
 ## **Usage**
 
