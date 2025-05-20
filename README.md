@@ -12,18 +12,34 @@
 ✅ Designed for remote sensing and satellite imagery analysis  
 ✅ Easy integration with FastAPI for web-based processing
 
-## **Installation**
+Here’s a more polished and professional version of your **Installation** section, suitable for documentation or a `README.md`:
 
-To install FEZrs and its dependencies, use:
+---
 
-```sh
+## **📦 Installation**
+
+You can install **FEZrs** using your preferred Python package manager:
+
+### Using `pip` (PyPI)
+
+```bash
 pip install fezrs
 ```
-Or
 
-```sh
-conda install -c FEZtool fezrs	
+### Using `conda` (Anaconda)
+
+```bash
+conda install -c FEZtool fezrs
 ```
+
+### Using `mamba` (optional, faster conda alternative)
+
+```bash
+mamba install FEZtool::fezrs
+```
+
+> **Note:** The `mamba` command requires [Mamba](https://github.com/mamba-org/mamba) to be installed. If it's not installed, use the `conda` command instead.
+
 ## **Usage**
 
 Example of applying a Gaussian filter to an image:
