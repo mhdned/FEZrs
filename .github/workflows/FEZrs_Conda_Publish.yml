@@ -1,9 +1,10 @@
 name: Conda Publish
 
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["PyPI Publish"]
+    types:
+      - completed
 
 jobs:
   build-conda:
