@@ -45,11 +45,13 @@ jobs:
           ANACONDA_USERNAME: ${{ secrets.ANACONDA_USERNAME }}
           ANACONDA_PASSWORD: ${{ secrets.ANACONDA_PASSWORD }}
         run: |
-          echo "$ANACONDA_PASSWORD" | anaconda login --username "$ANACONDA_USERNAME" --password --quiet
+          sudo apt-get update && sudo apt-get install -y expect
 
-      - name: Upload to Anaconda Cloud
-        shell: bash -l {0}
-        env:
-          ANACONDA_UPLOAD_CHANNEL: ${{ secrets.ANACONDA_UPLOAD_CHANNEL || secrets.ANACONDA_USERNAME }}
-        run: |
-          anaconda upload $(conda-build recip/ --output) --user "$ANACONDA_UPLOAD_CHANNEL" --force
+          expect <<EOF
+          spawn anaconda login --quiet
+          expect "Username:"
+          send "$env(ANACONDA_USERNAME)\r"
+          expect "Password:"
+          send "$env(ANACONDA_PASSWORD)\r"
+          expect eof
+          EOF
