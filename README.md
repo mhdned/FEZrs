@@ -1,6 +1,6 @@
 # **FEZrs**
 
-[![DOI](https://zenodo.org/badge/710286874.svg)](https://doi.org/10.5281/zenodo.14938038) ![Downloads](https://static.pepy.tech/badge/FEZrs) ![PyPI](https://img.shields.io/pypi/v/FEZrs?color=blue&label=PyPI&logo=pypi) [![Conda Version](https://img.shields.io/conda/vn/FEZtool/fezrs?label=Anaconda&color=orange)](https://anaconda.org/FEZtool/fezrs) ![License](https://img.shields.io/pypi/l/FEZrs) ![PyPI - Downloads](https://img.shields.io/pypi/dm/FEZrs) ![GitHub last commit](https://img.shields.io/github/last-commit/FEZtool-team/fezrs) ![GitHub stars](https://img.shields.io/github/stars/FEZtool-team/FEZrs?style=social)
+[![DOI](https://zenodo.org/badge/710286874.svg)](https://doi.org/10.5281/zenodo.14938038) ![Downloads](https://static.pepy.tech/badge/FEZrs) ![PyPI](https://img.shields.io/pypi/v/FEZrs?color=blue&label=PyPI&logo=pypi) [![Conda Version](https://img.shields.io/conda/vn/FEZtool/fezrs?label=Anaconda&color=orange&logo=anaconda)](https://anaconda.org/FEZtool/fezrs) ![License](https://img.shields.io/pypi/l/FEZrs) ![PyPI - Downloads](https://img.shields.io/pypi/dm/FEZrs) ![GitHub last commit](https://img.shields.io/github/last-commit/FEZtool-team/fezrs) ![GitHub stars](https://img.shields.io/github/stars/FEZtool-team/FEZrs?style=social)
 
 **FEZrs** is an advanced Python library developed by [**FEZtool**](https://feztool.com/) for remote sensing applications. It provides a set of powerful tools for image processing, feature extraction, and analysis of geospatial data.
 
