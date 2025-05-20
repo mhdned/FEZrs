@@ -27,12 +27,30 @@ jobs:
         run: |
           mamba install -y conda-build anaconda-client
 
-      - name: Extract version and sha256 from .bumpversion.cfg and PyPI
+      - name: Extract version from .bumpversion.cfg
         shell: bash -l {0}
         run: |
           VERSION=$(python -c "from configparser import ConfigParser; cfg=ConfigParser(); cfg.read('.bumpversion.cfg'); print(cfg['bumpversion']['current_version'])")
-          SHA256=$(curl -sL https://pypi.io/packages/source/f/fezrs/fezrs-${VERSION}.tar.gz | sha256sum | awk '{print $1}')
           echo "FEZRS_VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Wait for PyPI source package availability
+        shell: bash -l {0}
+        run: |
+          URL="https://files.pythonhosted.org/packages/source/f/fezrs/fezrs-${{ env.FEZRS_VERSION }}.tar.gz"
+          for i in {1..10}; do
+            if curl --head --silent --fail "$URL"; then
+              echo "Source package is available!"
+              break
+            else
+              echo "Source package not found, waiting 30 seconds..."
+              sleep 30
+            fi
+          done
+
+      - name: Download sha256 hash of source package
+        shell: bash -l {0}
+        run: |
+          SHA256=$(curl -sL https://files.pythonhosted.org/packages/source/f/fezrs/fezrs-${{ env.FEZRS_VERSION }}.tar.gz | sha256sum | awk '{print $1}')
           echo "SHA256_HASH=${SHA256}" >> $GITHUB_ENV
 
       - name: Build Conda package
