@@ -19,7 +19,11 @@ To install FEZrs and its dependencies, use:
 ```sh
 pip install fezrs
 ```
+Or
 
+```sh
+conda install feztool::fezrs	
+```
 ## **Usage**
 
 Example of applying a Gaussian filter to an image:
