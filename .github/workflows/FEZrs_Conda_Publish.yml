@@ -7,23 +7,24 @@ on:
 
 jobs:
   build-conda:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Miniconda
+      - name: Set up Miniconda with Mamba
         uses: conda-incubator/setup-miniconda@v2
         with:
-          python-version: "3.10"
           auto-update-conda: true
-          miniforge-variant: "miniconda"
+          python-version: "3.10"
+          miniforge-variant: Miniforge3
+          mamba: true
 
       - name: Install conda-build and anaconda-client
         shell: bash -l {0}
         run: |
-          conda install -y conda-build anaconda-client
+          mamba install -y conda-build anaconda-client
 
       - name: Extract version and sha256
         shell: bash -l {0}
@@ -33,20 +34,22 @@ jobs:
           echo "FEZRS_VERSION=${VERSION}" >> $GITHUB_ENV
           echo "SHA256_HASH=${SHA256}" >> $GITHUB_ENV
 
-      - name: Build conda package
+      - name: Build Conda package
         shell: bash -l {0}
         run: |
           conda-build recip/
 
-      - name: Authenticate with Anaconda
+      - name: Login to Anaconda
         shell: bash -l {0}
         env:
-          ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
+          ANACONDA_USERNAME: ${{ secrets.ANACONDA_USERNAME }}
+          ANACONDA_PASSWORD: ${{ secrets.ANACONDA_PASSWORD }}
         run: |
-          mkdir -p ~/.binstar
-          echo "{ \"token\": \"$ANACONDA_API_KEY\" }" > ~/.binstar/credentials
+          echo "$ANACONDA_PASSWORD" | anaconda login --username "$ANACONDA_USERNAME" --password --quiet
 
       - name: Upload to Anaconda Cloud
         shell: bash -l {0}
+        env:
+          ANACONDA_UPLOAD_CHANNEL: ${{ secrets.ANACONDA_UPLOAD_CHANNEL || secrets.ANACONDA_USERNAME }}
         run: |
-          anaconda upload $(conda-build recip/ --output) --force
+          anaconda upload $(conda-build recip/ --output) --user "$ANACONDA_UPLOAD_CHANNEL" --force
