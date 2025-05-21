@@ -14,8 +14,20 @@ from fezrs.utils.type_handler import BandPathType, BandPathsType
 
 # Definition abstract class (BaseTool)
 class BaseTool(ABC):
+    """
+    Abstract base class for FEZrs tools.
+
+    Provides common initialization, validation, processing, and export logic for derived tools.
+    Handles band file paths, watermarking, and standardized export of results.
+    """
 
     def __init__(self, **bands_path: BandPathsType):
+        """
+        Initializes the BaseTool with band file paths and loads the watermark logo.
+
+        Args:
+            **bands_path: Arbitrary keyword arguments representing band file paths.
+        """
         self._output = None
         self.__tool_name = self.__class__.__name__.replace("Calculator", "")
 
@@ -28,13 +40,29 @@ class BaseTool(ABC):
         self.files_handler = FileHandler(**bands_path)
 
     def _validate(self):
+        """
+        Abstract method for validating input data or configuration.
+
+        Should be implemented by subclasses to perform tool-specific validation.
+        """
         raise NotImplementedError("Subclasses should implement this method")
 
     def process(self):
+        """
+        Abstract method for processing data.
+
+        Should be implemented by subclasses to perform the main computation.
+        """
         self._validate()
         raise NotImplementedError("Subclasses should implement this method")
 
     def _customize_export_file(self, ax):
+        """
+        Hook for subclasses to customize the export plot.
+
+        Args:
+            ax: The matplotlib axes object to customize.
+        """
         pass
 
     def _export_file(
@@ -52,6 +80,26 @@ class BaseTool(ABC):
         nrows: int = 1,
         ncols: int = 1,
     ):
+        """
+        Exports the computed output as a PNG image with optional customization.
+
+        Args:
+            output_path: Directory to save the exported image.
+            title: Optional title for the plot.
+            figsize: Figure size for the plot.
+            show_axis: Whether to display axes.
+            colormap: Colormap for the image.
+            show_colorbar: Whether to display a colorbar.
+            filename_prefix: Prefix for the output filename.
+            dpi: Dots per inch for the saved image.
+            bbox_inches: Bounding box option for saving the figure.
+            grid: Whether to display a grid.
+            nrows: Number of subplot rows.
+            ncols: Number of subplot columns.
+
+        Returns:
+            The path to the saved image file.
+        """
         filename_prefix = self.__tool_name
 
         # Check output property is not empty
@@ -102,6 +150,26 @@ class BaseTool(ABC):
         nrows: int = None,
         ncols: int = None,
     ):
+        """
+        Executes the tool: validates input, processes data, and exports the result.
+
+        Args:
+            output_path: Directory to save the exported image.
+            title: Optional title for the plot.
+            figsize: Figure size for the plot.
+            show_axis: Whether to display axes.
+            colormap: Colormap for the image.
+            show_colorbar: Whether to display a colorbar.
+            filename_prefix: Prefix for the output filename.
+            dpi: Dots per inch for the saved image.
+            bbox_inches: Bounding box option for saving the figure.
+            grid: Whether to display a grid.
+            nrows: Number of subplot rows.
+            ncols: Number of subplot columns.
+
+        Returns:
+            self: The instance of the tool.
+        """
         self._validate()
         self.process()
         self._export_file(
