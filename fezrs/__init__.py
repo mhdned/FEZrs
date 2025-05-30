@@ -40,6 +40,10 @@ from fezrs.tools.spectral_profile.spectral_profile_calculator import (
     SpectralProfileCalculator,
 )
 
+from fezrs.tools.mosaic.mosaic_calculator import (
+    MosaicCalculator,
+)
+
 __all__ = [
     "KMeansCalculator",
     "GuassianCalculator",
@@ -69,4 +73,5 @@ __all__ = [
     "SAVICalculator",
     "UICalculator",
     "SpectralProfileCalculator",
+    "MosaicCalculator",
 ]
