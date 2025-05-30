@@ -128,7 +128,7 @@ class BaseTool(ABC):
         self._customize_export_file(ax)
 
         # Export file
-        filename = f"{output_path}/{filename_prefix}_{uuid4().hex}.png"
+        filename = f"{output_path}/{filename_prefix}_output_{uuid4().hex}.png"
         fig.savefig(filename, dpi=dpi, bbox_inches=bbox_inches)
 
         # Close plt and return value
