@@ -44,6 +44,9 @@ from fezrs.tools.mosaic.mosaic_calculator import (
     MosaicCalculator,
 )
 
+from fezrs.tools.import_tools.geoeye_calculator import Geoeye_Calculator
+from fezrs.tools.import_tools.landsat8_calculator import Landsat8_Calculator
+
 __all__ = [
     "KMeansCalculator",
     "GuassianCalculator",
@@ -74,4 +77,6 @@ __all__ = [
     "UICalculator",
     "SpectralProfileCalculator",
     "MosaicCalculator",
+    "Geoeye_Calculator",
+    "Landsat8_Calculator",
 ]
