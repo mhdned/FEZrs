@@ -1,6 +1,7 @@
 import os
 import numpy as np
 from skimage import io
+import rasterio as rio
 import matplotlib.pyplot as plt
 from typing import Optional, Dict, List
 
@@ -82,6 +83,10 @@ def _metadata_image(path: str) -> Dict[str, np.ndarray]:
     }
 
 
+def _rasterio_image_tifs(path: str):
+    return rio.open(path)
+
+
 class FileHandler:
     """
     FileHandler is a utility class for managing and processing geospatial image files.
@@ -102,7 +107,11 @@ class FileHandler:
         swir1_path: Optional[BandPathType] = None,
         swir2_path: Optional[BandPathType] = None,
         tif_path: Optional[BandPathType] = None,
+        tif_paths: Optional[List[BandPathType]] = None,
     ):
+
+        self.tif_paths = tif_paths
+
         self.band_paths: BandTypes = {
             "tif": tif_path,
             "red": red_path,
@@ -176,3 +185,18 @@ class FileHandler:
             key: value for key, value in self.band_paths.items() if value is not None
         }
         return io.imread_collection(list(image_columns.values()))
+
+    def get_rasterio_tifs(self, requested_bands: Optional[list[BandNameType]] = None):
+        """
+        DOCSTRING
+        """
+        if self.tif_paths is None:
+            raise ValueError("The <tif_paths> could not be empty to read by rasterio.")
+
+        rasterio_image = []
+        for tif_path in self.tif_paths:
+            path = tif_path
+            if path and os.path.exists(path):
+                rasterio_image.append(_rasterio_image_tifs(path))
+
+        return rasterio_image
