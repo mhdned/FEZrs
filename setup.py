@@ -20,6 +20,7 @@ setup(
         "Pillow",
         "pydantic",
         "matplotlib",
+        "imagecodecs",
         "scikit-learn",
         "scikit-image",
         "opencv-python",
