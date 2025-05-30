@@ -47,6 +47,13 @@ from fezrs.tools.mosaic.mosaic_calculator import (
 from fezrs.tools.import_tools.geoeye_calculator import Geoeye_Calculator
 from fezrs.tools.import_tools.landsat8_calculator import Landsat8_Calculator
 
+from fezrs.tools.change_detection.burn_calculator import BurnCalculator
+from fezrs.tools.change_detection.indices_calculator import IndicesCalculator
+from fezrs.tools.change_detection.magdir_calculator import MagDirCalculator
+from fezrs.tools.change_detection.subdiv_calculator import SubDivCalculator
+from fezrs.tools.change_detection.time_calculator import TimeCalculator
+
+
 __all__ = [
     "KMeansCalculator",
     "GuassianCalculator",
@@ -79,4 +86,9 @@ __all__ = [
     "MosaicCalculator",
     "Geoeye_Calculator",
     "Landsat8_Calculator",
+    "BurnCalculator",
+    "IndicesCalculator",
+    "MagDirCalculator",
+    "SubDivCalculator",
+    "TimeCalculator",
 ]
