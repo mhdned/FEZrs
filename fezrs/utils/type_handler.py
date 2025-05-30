@@ -80,18 +80,22 @@ Landset8ExportType = Literal[
     "rgb",
     "infrared",
 ]
+"""Type alias for supported Landsat 8 export types."""
 
 TimeCDType = Literal[
     "before",
     "after",
 ]
+"""Type alias for time-based change detection."""
 
 SubDivCDType = Literal[
     "subtract",
     "divide",
 ]
+"""Type alias for subtraction/division change detection."""
 
 MagDirCDType = Literal[
     "magnitude",
     "direction",
 ]
+"""Type alias for magnitude/direction change detection."""

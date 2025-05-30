@@ -21,8 +21,6 @@ def _load_image(path: Optional[BandPathType]) -> Optional[np.ndarray]:
     Raises:
         FileNotFoundError: If the specified file path does not exist.
     """
-    """Loads an image from the given path if it exists."""
-
     # TODO - Add a check for file type, files must be in (*.tiff | *.tif) format
 
     if path and os.path.exists(path):
@@ -36,16 +34,18 @@ def _load_image(path: Optional[BandPathType]) -> Optional[np.ndarray]:
 def _normalize(image: Optional[np.ndarray]) -> Optional[np.ndarray]:
     """
     Normalize a given image array to the range [0, 1].
-    Parameters:
+
+    Args:
         image (Optional[np.ndarray]): The input image as a NumPy array.
             If None, the function returns None.
+
     Returns:
         Optional[np.ndarray]: The normalized image array with values scaled
             to the range [0, 1], or None if the input is None.
+
     Raises:
         TypeError: If the input is not a NumPy array.
     """
-
     if image is None:
         return None
 
@@ -84,18 +84,44 @@ def _metadata_image(path: str) -> Dict[str, np.ndarray]:
 
 
 def _rasterio_image_tifs(path: str):
+    """
+    Opens a TIFF image using rasterio.
+
+    Args:
+        path (str): The file path to the TIFF image.
+
+    Returns:
+        rasterio.io.DatasetReader: The rasterio dataset object for the image.
+    """
     return rio.open(path)
 
 
 class FileHandler:
     """
     FileHandler is a utility class for managing and processing geospatial image files.
+
     It provides functionality to load, normalize, and retrieve metadata for various image bands.
+
     Attributes:
+        tif_paths (Optional[List[BandPathType]]):
+            List of file paths for multi-band TIFF images.
         band_paths (Dict[str, Optional[BandPathType]]):
             A dictionary mapping band names (e.g., "red", "nir") to their respective file paths.
-        bands (Dict[str, Any]):
-            A dictionary mapping band names to their loaded image data.
+        bands (Dict[str, Optional[np.ndarray]]):
+            A dictionary mapping band names to their loaded image data as NumPy arrays.
+
+    Methods:
+        get_normalized_bands(requested_bands: Optional[List[BandNameType]] = None) -> Dict[str, Optional[np.ndarray]]:
+            Retrieve normalized versions of the requested image bands. If no bands are specified, all available bands are normalized.
+
+        get_metadata_bands(requested_bands: Optional[List[BandNameType]] = None) -> Dict[str, Dict]:
+            Retrieve metadata (image data and dimensions) for the requested image bands. If no bands are specified, metadata for all available bands is returned.
+
+        get_images_collection() -> skimage.io.ImageCollection:
+            Retrieve a collection of all available image bands as an ImageCollection.
+
+        get_rasterio_tifs(requested_bands: Optional[List[BandNameType]] = None):
+            Retrieve rasterio objects for all TIFF paths in tif_paths. Raises ValueError if tif_paths is None.
     """
 
     def __init__(
@@ -114,7 +140,22 @@ class FileHandler:
         before_swir1_path: Optional[BandPathType] = None,
         before_swir2_path: Optional[BandPathType] = None,
     ):
+        """
+        Initialize the FileHandler with paths to various image bands.
 
+        Args:
+            red_path (Optional[BandPathType]): Path to the red band image.
+            green_path (Optional[BandPathType]): Path to the green band image.
+            blue_path (Optional[BandPathType]): Path to the blue band image.
+            nir_path (Optional[BandPathType]): Path to the near-infrared band image.
+            swir1_path (Optional[BandPathType]): Path to the shortwave infrared 1 band image.
+            swir2_path (Optional[BandPathType]): Path to the shortwave infrared 2 band image.
+            tif_path (Optional[BandPathType]): Path to a single TIFF image.
+            tif_paths (Optional[List[BandPathType]]): List of paths to TIFF images.
+            before_nir_path (Optional[BandPathType]): Path to the "before" NIR band image.
+            before_swir1_path (Optional[BandPathType]): Path to the "before" SWIR1 band image.
+            before_swir2_path (Optional[BandPathType]): Path to the "before" SWIR2 band image.
+        """
         self.tif_paths = tif_paths
 
         self.band_paths: BandTypes = {
@@ -196,7 +237,16 @@ class FileHandler:
 
     def get_rasterio_tifs(self, requested_bands: Optional[list[BandNameType]] = None):
         """
-        DOCSTRING
+        Retrieve rasterio DatasetReader objects for all TIFF paths in tif_paths.
+
+        Args:
+            requested_bands (Optional[List[BandNameType]]): Not used. Reserved for future filtering.
+
+        Returns:
+            List[rasterio.io.DatasetReader]: List of rasterio dataset objects for each TIFF path.
+
+        Raises:
+            ValueError: If tif_paths is None.
         """
         if self.tif_paths is None:
             raise ValueError("The <tif_paths> could not be empty to read by rasterio.")
