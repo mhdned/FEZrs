@@ -107,7 +107,12 @@ class FileHandler:
         swir1_path: Optional[BandPathType] = None,
         swir2_path: Optional[BandPathType] = None,
         tif_path: Optional[BandPathType] = None,
+        # Tif list bands path
         tif_paths: Optional[List[BandPathType]] = None,
+        # Before bands paths
+        before_nir_path: Optional[BandPathType] = None,
+        before_swir1_path: Optional[BandPathType] = None,
+        before_swir2_path: Optional[BandPathType] = None,
     ):
 
         self.tif_paths = tif_paths
@@ -120,6 +125,9 @@ class FileHandler:
             "swir1": swir1_path,
             "swir2": swir2_path,
             "green": green_path,
+            "before_nir": before_nir_path,
+            "before_swir1": before_swir1_path,
+            "before_swir2": before_swir2_path,
         }
 
         self.bands: BandTypes = {
