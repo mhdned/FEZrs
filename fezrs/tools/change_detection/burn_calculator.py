@@ -32,29 +32,16 @@ class BurnCalculator(BaseTool):
         pass
 
     def process(self):
-        indices_after = self._output = (
-            self.time_bands["nir"]["image_skimage"]
-            - self.time_bands["swir2"]["image_skimage"]
-        ) / (
-            self.time_bands["nir"]["image_skimage"]
-            + self.time_bands["swir2"]["image_skimage"]
-        )
+        nir = self.time_bands["nir"]["image_skimage"]
+        swir2 = self.time_bands["swir2"]["image_skimage"]
+        before_nir = self.time_bands["before_nir"]["image_skimage"]
+        before_swir2 = self.time_bands["before_swir2"]["image_skimage"]
 
-        indices_before = (
-            self.time_bands["before_nir"]["image_skimage"]
-            - self.time_bands["before_swir2"]["image_skimage"]
-        ) / (
-            self.time_bands["before_nir"]["image_skimage"]
-            + self.time_bands["before_swir2"]["image_skimage"]
-        )
-
+        indices_after = (nir - swir2) / (nir + swir2)
+        indices_before = (before_nir - before_swir2) / (before_nir + before_swir2)
         subtract_before_after = indices_before - indices_after
-        threshold = 0.7
 
-        burn = subtract_before_after > threshold
-
-        self._output = burn
-
+        self._output = subtract_before_after > 0.7
         return self._output
 
     def execute(
