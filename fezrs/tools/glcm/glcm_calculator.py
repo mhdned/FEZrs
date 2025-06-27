@@ -1,3 +1,5 @@
+from joblib import Parallel, delayed
+from datetime import datetime
 import numpy as np
 from pathlib import Path
 from fezrs.base import BaseTool
@@ -30,15 +32,26 @@ class GLCMCalculator(BaseTool):
         self.window_size = window_size
 
     def process(self):
-        for i in range(0, self.metadata_bands["nir"]["width"]):
-            print(f"Processing row {i} of {self.metadata_bands['nir']['width']}")
-            for j in range(0, self.metadata_bands["nir"]["height"]):
-                window = self.nir_image[
+        pad = self.window_size // 2
+        padded_image = np.pad(self.nir_image, pad, mode="reflect")
+        height, width = self.nir_image.shape
+
+        def process_row(i):
+            row_result = np.zeros(width, dtype=np.float64)
+            for j in range(width):
+                print(f"Processing row {i}, column {j}")
+                window = padded_image[
                     i : i + self.window_size, j : j + self.window_size
                 ]
                 glcm = graycomatrix(window, [1], [0], normed=True, symmetric=True)
-                res = graycoprops(glcm, self.property)[0][0]
-                self.result[i, j] = res
+                row_result[j] = graycoprops(glcm, self.property)[0, 0]
+            return row_result
+
+        results = Parallel(n_jobs=-1)(delayed(process_row)(i) for i in range(height))
+
+        for i, row in enumerate(results):
+            self.result[i, :] = row
+
         self._output = self.result
 
     def _validate(self):
