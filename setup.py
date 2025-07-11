@@ -17,6 +17,7 @@ setup(
     package_data={"fezrs": ["media/logo_watermark.png"]},
     install_requires=[
         "numpy",
+        "pandas",
         "Pillow",
         "pydantic",
         "matplotlib",
